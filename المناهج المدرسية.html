@@ -1,0 +1,2226 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Y_EDUX - المنصة التعليمية الشاملة للمناهج</title>
+    <style>
+        :root {
+            --primary-color: #dc3545;
+            --primary-dark: #b21f2d;
+            --secondary-color: #111111;
+            --light-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #212529;
+            --text-muted: #6c757d;
+            --border-color: #dee2e6;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--primary-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .logo-area h1 {
+            font-size: 28px;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+        }
+
+        .logo-area span {
+            font-size: 12px;
+            color: #eee;
+            display: block;
+        }
+
+        .creator-info {
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .creator-info a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 10px;
+            transition: color 0.3s;
+        }
+
+        .creator-info a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Main Layout */
+        .wrapper {
+            display: flex;
+            flex: 1;
+        }
+
+        /* Sidebar */
+        sidebar {
+            width: 280px;
+            background-color: #1e1e1e;
+            color: white;
+            padding: 20px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #ccc;
+            padding: 12px 15px;
+            text-align: right;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            padding-right: 25px;
+        }
+
+        /* Main Content Container */
+        main {
+            flex: 1;
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography & UI Cards */
+        h2 {
+            color: var(--secondary-color);
+            border-right: 5px solid var(--primary-color);
+            padding-right: 15px;
+            margin-bottom: 25px;
+            font-size: 26px;
+        }
+
+        h3 {
+            color: var(--primary-dark);
+            margin: 25px 0 15px 0;
+            font-size: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        h4 {
+            color: var(--secondary-color);
+            margin: 15px 0 10px 0;
+            font-size: 17px;
+        }
+
+        p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .quote-block {
+            background-color: rgba(220, 53, 69, 0.05);
+            border-right: 4px solid var(--primary-color);
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+            border-radius: 0 4px 4px 0;
+        }
+
+        ul, ol {
+            margin-right: 25px;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Tables styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--card-bg);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px 15px;
+            text-align: right;
+        }
+
+        th {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--light-bg);
+        }
+
+        /* Interactive Mindmap (Tree Structure) */
+        .mindmap-container {
+            background: #111;
+            color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .mindmap-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tree, .tree ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .tree ul {
+            margin-right: 20px;
+            position: relative;
+        }
+
+        .tree ul::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: -10px;
+            bottom: 0;
+            border-right: 2px dashed #444;
+            width: 0;
+        }
+
+        .tree li {
+            margin: 0;
+            padding: 10px 15px 0 0;
+            position: relative;
+        }
+
+        .tree li::before {
+            content: "";
+            position: absolute;
+            top: 20px;
+            right: -10px;
+            width: 10px;
+            border-top: 2px dashed #444;
+        }
+
+        .tree li:last-child::before {
+            background: #111;
+            height: auto;
+            bottom: 0;
+            top: 20px;
+        }
+
+        .node {
+            background: #222;
+            border: 1px solid #333;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .node:hover {
+            border-color: var(--primary-color);
+            background: #2b1114;
+        }
+
+        .node.root {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            border: none;
+        }
+
+        .node.branch {
+            color: #ffc107;
+            font-weight: 500;
+        }
+
+        /* Interactive Quiz System */
+        .quiz-card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-right: 4px solid var(--secondary-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .quiz-question {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: var(--light-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-label:hover {
+            background: #eee;
+        }
+
+        .option-label.correct {
+            background-color: rgba(40, 167, 69, 0.15) !important;
+            border-color: var(--success-color) !important;
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .option-label.incorrect {
+            background-color: rgba(220, 53, 69, 0.15) !important;
+            border-color: var(--danger-color) !important;
+            color: var(--danger-color);
+        }
+
+        .quiz-feedback {
+            padding: 12px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .check-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .check-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-color);
+            color: #aaa;
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+            border-top: 3px solid var(--primary-color);
+            font-size: 14px;
+        }
+
+        @media (max-width: 992px) {
+            .wrapper { flex-direction: column; }
+            sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; }
+            header { flex-direction: column; gap: 10px; text-align: center; }
+            .creator-info { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <h1>Y_EDUX</h1>
+            <span>المنصة التعليمية المتقدمة للمناهج المدرسية</span>
+        </div>
+        <div class="creator-info">
+            <div>المصمم: <strong>MR. YOUSSEF ALI</strong></div>
+            <div>واتساب: <a href="https://wa.me/201034288343" target="_blank">01034288343</a></div>
+            <div>فيسبوك: <a href="https://www.facebook.com/Youssef.Ali.s.Mohamed" target="_blank">رابط الحساب الرسمي</a></div>
+        </div>
+    </header>
+
+    <div class="wrapper">
+        <sidebar>
+            <button class="nav-btn active" onclick="switchSection('chap1', this)">الفصل الأول: مفهوم المنهج</button>
+            <button class="nav-btn" onclick="switchSection('chap2', this)">الفصل الثاني: عناصر المنهج</button>
+            <button class="nav-btn" onclick="switchSection('chap3', this)">الفصل الثالث: أسس بناء المنهج</button>
+            <button class="nav-btn" onclick="switchSection('chap4', this)">الفصل الرابع: نظريات المنهج</button>
+            <button class="nav-btn" onclick="switchSection('chap5', this)">الفصل الخامس: تنظيمات المنهج</button>
+            <button class="nav-btn" onclick="switchSection('quizzes', this)" style="border-top: 2px solid #444; color: #ffc107;">الاختبارات التفاعلية 📝</button>
+        </sidebar>
+
+        <main>
+            <!-- CHAPTER 1 -->
+            <section id="chap1" class="content-section active">
+                <h2>الفصل الأول: مفهوم المنهج المدرسي</h2>
+                <div class="card">
+                    <p>يعد مفهوم المنهج حجر الزاوية في العملية التعليمية، وقد مر بتطورات جوهرية نقلته من مجرد "مقرر دراسي" إلى "منظومة متكاملة" من الخبرات.</p>
+                </div>
+
+                <div class="mindmap-container">
+                    <div class="mindmap-title">🌳 خريطة ذهنية تفاعلية: تطور مفهوم المنهج (اضغط للاستكشاف)</div>
+                    <ul class="tree">
+                        <li>
+                            <span class="node root">مفهوم المنهج</span>
+                            <ul>
+                                <li>
+                                    <span class="node branch">التطور التاريخي واللغوي</span>
+                                    <ul>
+                                        <li><span class="node">الأصل اللاتيني: مضمار السباق أو ما يجري في المهرجانات</span></li>
+                                        <li><span class="node">قرن 18 و19: اقتصار المنهج على مواد صفة الدوام (نحو، رياضيات، منطق)</span></li>
+                                        <li><span class="node">الميادين الخمسة: اللغة القومية، الرياضيات، العلوم، التاريخ، اللغات الأجنبية</span></li>
+                                        <li><span class="node">النقد: قصر نظر، حفظ أصم، إهمال الطلاب، عجز أمام الانفجار المعرفي</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span class="node branch">النصف الأول من القرن 20</span>
+                                    <ul>
+                                        <li><span class="node">مرحلة الخبرات: جميع الخبرات المكتسبة بتوجيه المعلم</span></li>
+                                        <li><span class="node">كاسويل وكامبل: التركيز على التنشئة الاجتماعية للمدرسة</span></li>
+                                        <li><span class="node">تعريف الخبرة: محصلة تفاعل المتعلم مع المواقف تحت إشراف المدرسة</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span class="node branch">الخمسينات والستينات</span>
+                                    <ul>
+                                        <li><span class="node">تايلر (1956): خبرات تعليمية مخططة ومشرف عليها لتحقيق الأهداف</span></li>
+                                        <li><span class="node">هيلدا تابا: خطة للتعلم</span></li>
+                                        <li><span class="node">كير: تعلم فردي أو جماعي مخطط له داخل أو خارج المدرسة</span></li>
+                                        <li><span class="node">جونسون: الاهتمام بالنتائج والغايات النهائية وليس السلوك أثناء الموقف فقط</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span class="node branch">المفهوم المعاصر الشامل</span>
+                                    <ul>
+                                        <li><span class="node">تانر: خبرات التعلم المخططة والموجة ونواتج التعلم المقصودة المعرفة عملية ديناميكية</span></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <h3>1. التطور التاريخي لمصطلح المنهج</h3>
+                <div class="card">
+                    <ul>
+                        <li><strong>الأصل اللغوي:</strong> تعود كلمة منهج (Curriculum) إلى أصل لاتيني يعني مضمار السباق أو ما يجري في المهرجانات.</li>
+                        <li><strong>التحول الدلالي:</strong> تحول المصطلح بمرور الزمن ليشير إلى المقررات الدراسية أو الخطط الخاصة بها.</li>
+                        <li><strong>نظرة القرنين الـ18 والـ19:</strong> سادت وجهات نظر تقليدية رأت ضرورة اقتصار المنهج على المواد ذات صفة الدوام (مثل النحو، والرياضيات، والمنطق) في المرحلتين الابتدائية والإعدادية، مع تقديم موضوعات أعمق في المرحلة الثانوية.</li>
+                        <li><strong>الميادين الكبرى:</strong> طالب المربون قديماً بأن يتكون المنهج من خمسة ميادين أساسية: (اللغة القومية، الرياضيات، العلوم، التاريخ، اللغات الأجنبية).</li>
+                        <li><strong>النقد الموجه لهذه الفترة:</strong> وُصفت هذه النظرة بقصر النظر لأنها حصرت المنهج في نقل المعرفة فقط، وأهملت حاجات الطلاب واهتماماتهم، وواجهت صعوبة أمام ظاهرة "الانفجار المعرفي" في القرن العشرين.</li>
+                    </ul>
+                </div>
+
+                <h3>2. المنهج في النصف الأول من القرن العشرين (مرحلة الخبرات)</h3>
+                <div class="card">
+                    <ul>
+                        <li><strong>التوسع في المفهوم:</strong> بدأ المنهج يُنظر إليه كـ "جميع الخبرات التي يكتسبها التلاميذ بتوجيه من معلمهم".</li>
+                        <li><strong>إسهامات كاسويل وكامبل:</strong> ركزا على وظيفة التنشئة الاجتماعية للمدرسة.</li>
+                        <li><strong>تعريف الخبرة:</strong> المنهج هو محصلة تفاعل المتعلم مع المواقف التعليمية (داخل أو خارج المدرسة) تحت إشرافها، مما نقل الخبرة من حالة الجمود إلى النشاط.</li>
+                    </ul>
+                </div>
+
+                <h3>3. المنهج في الخمسينات والستينات (مرحلة التخطيط والنتائج)</h3>
+                <div class="card">
+                    <ul>
+                        <li><strong>رأي تايلر (1956):</strong> المنهج هو جميع الخبرات التعليمية المخططة والمشرف عليها لتحقيق الأهداف التربوية.</li>
+                        <li><strong>رأي هيلدا تابا:</strong> المنهج هو "خطة للتعلم".</li>
+                        <li><strong>رأي كير (نهاية الستينات):</strong> ركز على أن التعلم قد يكون جماعياً أو فردياً، داخل أو خارج المدرسة، طالما أنه مخطط له.</li>
+                        <li><strong>رأي جونسون:</strong> المنهج هو "الاهتمام بالنتائج أو الغايات النهائية" وليس ما يفعله الطلاب أثناء الموقف فقط.</li>
+                    </ul>
+                </div>
+
+                <h3>4. مفهوم تانر الشامل (المنهج المعاصر)</h3>
+                <div class="card">
+                    <p>يرى تانر المنهج على أنه "خبرات التعلم المخططة والموجهة ونواتج التعلم المقصودة"، معتبراً المعرفة عملية ديناميكية وليست ثابتة، تهدف لتحقيق نمو شامل ومتكامل للمتعلم بما يتناسب مع حاجات المجتمع.</p>
+                </div>
+
+                <h3>5. تصنيف اتجاهات تعريف المنهج</h3>
+                <p>يمكن تصنيف كافة التعريفات في مجموعتين رئيستين:</p>
+                
+                <h4>أولاً: الاتجاهات التقليدية (المنهج كمادة دراسية)</h4>
+                <div class="card">
+                    <p>يركز هذا اتجاه على المادة الدراسية كغاية في حد ذاتها، حيث يقوم المتخصصون بإعدادها والمعلمون بتدريسها والطلاب بحفظها.</p>
+                    <ul>
+                        <li><strong>الآثار السلبية على الطلاب:</strong> يشجع على الحفظ الأصم، التنافس الفردي بدلاً من التعاون، وإهمال الفروق الفردية والميول.</li>
+                        <li><strong>الآثار السلبية على المعلم:</strong> ينحصر دوره في "نقل وتلقين" المعلومات وتوضيحها وتبسيطها فقط.</li>
+                        <li><strong>الآثار السلبية على المادة الدراسية:</strong> تضخم المقررات، ضعف الترابط بين المواد، والتركيز على النجاح في الاختبارات فقط.</li>
+                        <li><strong>الآثار السلبية على المدرسة والبيئة:</strong> عزلة المدرسة عن المجتمع، استخدام أأساليب التهديد والوعيد، وغياب الأنشطة الهادفة.</li>
+                    </ul>
+                </div>
+
+                <h4>ثانياً: الاتجاهات الحديثة (المنهج كخبرة ونظام)</h4>
+                <div class="card">
+                    <p>ظهرت نتيجة الأبحاث في علم النفس والتربية وتضاعف البحوث العلمية.</p>
+                    <ol>
+                        <li><strong>المنهج كخبرات:</strong> التركيز على حاجات الطفل واهتماماته (جون ديوي)، حيث المدرسة وسيلة لتزويد الطلاب بفرص للمرور بخبرات مرغوبة.</li>
+                        <li><strong>المنهج كأنماط تفكير:</strong> التركيز على التفكير التأملي والاستقصائي المنظم (فينكس وبيل)، وتوفير القدرة على تنظيم المفاهيم.</li>
+                        <li><strong>المنهج كغايات نهائية (نواتج):</strong> التمييز بين الوسائل (التدريس) والنتائج (المنهج)، حيث المنهج هو "سلسلة من نواتج التعلم المرغوبة".</li>
+                        <li><strong>المنهج كخطة مكتوبة:</strong> وثيقة تشتمل على الأهداف والمحتوى والطرق والتقويم (بوشامب وهاس)، والتمييز بين "المنهج الوظيفي" (الواقعي) و"المنهج المكتوب".</li>
+                        <li><strong>المنهج كنظام إنتاج (نموذج بوشامب):</strong> يتكون من ثلاثة أبعاد رئيسية:
+                            <ul>
+                                <li><strong>المدخلات:</strong> أسس التربية، خصائص المجتمع، خبرة المعلم، والقيم الثقافية.</li>
+                                <li><strong>العمليات:</strong> اختيار الميدان، الأشخاص، وتخطيط وكتابة المنهج وإجراءات التنفيذ والتقييم.</li>
+                                <li><strong>المخرجات:</strong> زيادة المعارف، تغيير الاتجاهات، والالتزام بالعمل.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- CHAPTER 2 -->
+            <section id="chap2" class="content-section">
+                <h2>الفصل الثاني: عناصر المنهج المدرسي</h2>
+                <div class="card">
+                    <p>يتكون المنهج المدرسي بمنظوره الحديث من منظومة متكاملة من العناصر المترابطة التي يؤثر كل منها في الآخر ويتأثر به. هذه العناصر هي: (الأهداف، المحتوى، طرق التدريس، الأنشطة التعليمية، والتقويم).</p>
+                </div>
+
+                <div class="mindmap-container">
+                    <div class="mindmap-title">🌳 خريطة ذهنية تفاعلية: عناصر منظومة المنهج</div>
+                    <ul class="tree">
+                        <li>
+                            <span class="node root">عناصر المنهج</span>
+                            <ul>
+                                <li>
+                                    <span class="node branch">1. الأهداف التعليمية</span>
+                                    <ul>
+                                        <li><span class="node">مستويات الأهداف: غايات إستراتيجية -> أهداف عامة -> أهداف تعليمية متوسطة -> أهداف سلوكية إجرائية</span></li>
+                                        <li><span class="node">المجال المعرفي (بلوم): تذكر -> فهم -> تطبيق -> تحليل -> تركيب -> تقويم</span></li>
+                                        <li><span class="node">المجال الوجداني (كراثوول): استقبال -> استجابة -> تقييم -> تنظيم قيمى -> تميز بقيمة</span></li>
+                                        <li><span class="node">المجال النفس حركي (سمبسون): إدراك حسي -> ميل -> استجابة موجهة -> آلية -> استجابة معقدة -> تكيف -> ابتكار</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span class="node branch">2. المحتوى التعليمي</span>
+                                    <ul>
+                                        <li><span class="node">البنية الهرمية: حقائق -> مفاهيم -> تعميمات ومبادئ -> قوانين ونظريات</span></li>
+                                        <li><span class="node">معايير الاختيار: الصدق والأهمية، الارتباط بالواقع، التوازن، الفروق الفردية، القابلية للتعلم</span></li>
+                                        <li><span class="node">التنظيم: منطقي (طبيعة المادة)، نفسي (خصائص الطلاب)، أفقي (اتساق)، رأسي (استمرارية)</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span class="node branch">3. طرق التدريس</span>
+                                    <ul>
+                                        <li><span class="node">التصنيف: حول المعلم (إلقاء)، حول المتعلم (حل مشكلات، استقصاء)، تفاعلية مشتركة</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span class="node branch">4. الأنشطة والوسائل</span>
+                                    <ul>
+                                        <li><span class="node">الأنواع: صفية (داخل الفصل)، لا صفية (رحلات، جمعيات، زيارات متاحف)</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span class="node branch">5. التقويم التربوي</span>
+                                    <ul>
+                                        <li><span class="node">مفاهيم: قياس (كمي) -> تقييم (تشخيص وحكم) -> تقويم (تشخيص + علاج وإصلاح)</span></li>
+                                        <li><span class="node">بحسب الوقت: قبلي (تشخيصي تهميدي)، تكويني (بنائي مستمر)، ختامي (نهائي تجميعي)</span></li>
+                                        <li><span class="node">الشروط: الشمول، الاستمرارية، الموضوعية، التنوع، الاتساق والترابط</span></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <h3>العنصر الأول: الأهداف التعليمية (Educational Objectives)</h3>
+                <div class="card">
+                    <p>تعد الأهداف نقطة البداية لأي عمل تربوي، وهي التي تحدد اتجاه منظومة المنهج بأكملها.</p>
+                    <h4>1. مستويات الأهداف التربوية:</h4>
+                    <p>تنقسم الأهداف من حيث عموميتها ومدى زمن تحقيقها إلى أربعة مستويات أساسية:</p>
+                    <ul>
+                        <li><strong>أ. الغايات التربوية (الأهداف الإستراتيجية العريضة):</strong> أهداف شديدة العمومية والتجريد والمثالية. تضعها الدولة أو اللجان العليا للسياسات التعليمية. تستغرق وقتاً طويلاً جداً لتحقيقها (قد يمتد لسنوات أو عقود). <em>مثال:</em> إعداد المواطن الصالح المتكامل شخصياً واجتماعياً، أو تنمية الولاء والانتماء للوطن.</li>
+                        <li><strong>ب. الأهداف العامة (المقاصد التربوية):</strong> أهداف أقل عمومية وتجريداً من الغايات، وترتبط بمرحلة دراسية معينة أو برنامج تعليمي محدد. <em>مثال:</em> أهداف المرحلة الإعدادية، أو أهداف المرحلة الثانوية، أو أهداف تدريس مادة الرياضيات في المرحلة الثانوية.</li>
+                        <li><strong>ج. الأهداف التعليمية (المتوسطة):</strong> تتعلق بمقرر دراسي معين أو وحدة دراسية محددة داخل المنهج. تصف النواتج التعليمية المتوقع تحقيقها من دراسة مقرر معين خلال عام أو فصل دراسي واحد. <em>مثال:</em> أن يتقن الطالب مهارات التفكير العلمي من خلال دراسة مقرر الفيزياء.</li>
+                        <li><strong>د. الأهداف السلوكية (الإجرائية المحددة):</strong> أهداف مصاغة بدقة ووضوح شديدين، تصف سلوكاً يسهل ملاحظته وقياسه يقوم به المتعلم في نهاية موقف تعليمي قصير (حصة دراسية واحدة). تُصاغ بالمعادلة التالية: <strong>[أن + فعل مضارع سلوكي قابل للملاحظة والقياس + الطالب + المحتوى التعليمي + حد أدنى للأداء (اختياري)].</strong> <em>مثال:</em> أن يذكر الطالب شروط صلح الحديبية دون أخطاء.</li>
+                    </ul>
+
+                    <h4>2. مجالات الأهداف السلوكية (تصنيف بلوم وتلاميذه):</h4>
+                    
+                    <h5>أولاً: المجال المعرفي (Cognitive Domain) - تصنيف بلوم (Bloom):</h5>
+                    <p>يهتم بالعمليات العقلية والفكرية والمعلومات، ويضم 6 مستويات متدرجة صعوداً:</p>
+                    <ol>
+                        <li><strong>التذكر (المعرفة):</strong> استدعاء أو تذكر المعلومات، الحقائق، والقوانين كما هي دون تغيير. <em>(أفعال: يذكر، يُعرّف، يُعدّد، يُسمّي).</em></li>
+                        <li><strong>الفهم (الاستيعاب):</strong> القدرة على إدراك معنى المادة وصياغتها بأسلوب الطالب أو تفسيرها. <em>(أفعال: يشرح، يفسر، يلخص، يعيد صياغة).</em></li>
+                        <li><strong>التطبيق:</strong> استخدام المعارف والقوانين والنظريات المجردة في مواقف جديدة ومحسوسة. <em>(أفعال: يحل مسألة، يطبق، يستخدم، يحسب).</em></li>
+                        <li><strong>التحليل:</strong> تفكيك المادة المعرفية إلى عناصرها ومكوناتها الجزئية لمعرفة العلاقات بينها. <em>(أفعال: يحلل، يقارن، يفرق، يستنتج).</em></li>
+                        <li><strong>التركيب:</strong> وضع العناصر والأجزاء معاً لتشكيل قالب أو كل جديد ومبتكر. <em>(أفعال: يبتكر، يؤلف، يخطط، يصمم).</em></li>
+                        <li><strong>التقويم:</strong> إصدار أحكام كمية أو كيفية على قيمة الأفكار، الأعمال، أو المواد في ضوء معايير محددة. <em>(أفعال: ينقد، يحكم على، يقيم، يبرر).</em></li>
+                    </ol>
+
+                    <h5>ثانياً: المجال الوجداني (Affective Domain) - تصنيف كراثوول (Krathwohl):</h5>
+                    <p>يهتم بالمشاعر، العواطف، الاتجاهات، الميول، والقيم، ويضم 5 مستويات متدرجة:</p>
+                    <ol>
+                        <li><strong>الاستقبال (الانتباه):</strong> حساسية المتعلم لوجود ظواهر ومثيرات معينة ورغبته في الاهتمام بها. <em>(أفعال: يصغي، ينتبه، يتابع).</em></li>
+                        <li><strong>الاستجابة:</strong> التفاعل الإيجابي والمشاركة الفعالة مع المثير وليس مجرد الانتباه له. <em>(أفعال: يشارك، يتطوع، يجيب، يمتثل).</em></li>
+                        <li><strong>التقييم (إعطاء قيمة):</strong> إعطاء المتعلم قيمة لشيء أو ظاهرة معينة، ويظهر ذلك في سلوكه المستمر. <em>(أفعال: يقدر، يدعم، يحتج، يدافع عن).</em></li>
+                        <li><strong>التنظيم (المنظومة القيمية):</strong> جمع قيم مختلفة وحل التناقضات بينها وبناء نظام قيمي داخلي متسق. <em>(أفعال: ينظم، يربط، يوازن، يخطط لـ).</em></li>
+                        <li><strong>التميّز بقيمة (تجسيد القيمة):</strong> أن يصبح للمتعلم نظام قيمي ثابت يوجه سلوكه في الحياة بشكل دائم وتلقائي. <em>(أفعال: يؤمن، يتصرف وفق، يحافظ على).</em></li>
+                    </ol>
+
+                    <h5>ثالثاً: المجال النفس حركي / المهاري (Psychomotor Domain) - تصنيف سمبسون (Simpson):</h5>
+                    <p>يهتم بالمهارات الجسدية، العضلية، والتآزر الحركي البصري، ويضم 7 مستويات متدرجة:</p>
+                    <ol>
+                        <li><strong>الإدراك الحسي:</strong> استخدام أعضاء الحس لتقدير وتوجيه النشاط الحركي. <em>(أفعال: يكتشف، يربط، يختار).</em></li>
+                        <li><strong>الميل أو الاستعداد:</strong> الاستعداد النفسي والعقلي والبدني للقيام بعمل حركي معين. <em>(أفعال: يبدي رغبة، يتأهب، يظهر استعداداً).</em></li>
+                        <li><strong>الاستجابة الموجهة:</strong> المراحل الأولى لتعلم مهارة معقدة تحت إشراف المعلم عن طريق التقليد أو المحاولة والخطأ. <em>(أفعال: يقلد، يجرب، يعيد عمل).</em></li>
+                        <li><strong>الآلية أو التعويد:</strong> أداء الحركات شبه الآلية بثقة وجدارة بعد تكرارها، بحيث تصبح اعتيادية. <em>(أفعال: يقود، يكتب، يربط، يشغل).</em></li>
+                        <li><strong>الاستجابة الظاهرية المعقدة (المهارة المركبة):</strong> أداء الحركات بدقة، وسرعة، وبأقل جهد ممكن ودون تردد. <em>(أفعال: يعزف, يطبع بسرعة، يصلح عطلاً بدقة).</em></li>
+                        <li><strong>التكيف (التعديل):</strong> القدرة على تعديل وتغيير الحركات وتطويرها لتناسب مواقف أو مشكلات جديدة. <em>(أفعال: يُعدّل، يكيّف، يغير).</em></li>
+                        <li><strong>الابتكار (الإبداع):</strong> إيجاد حركات وأنماط جديدة ومبتكرة تماماً ولم تكن معروفة من قبل. <em>(أفعال: يبتكر، يصمم حركة، يبدع).</em></li>
+                    </ol>
+                </div>
+
+                <h3>العنصر الثاني: المحتوى التعليمي (Educational Content)</h3>
+                <div class="card">
+                    <p>المحتوى هو المادة المعرفية والخبرات التي يتم اختيارها وتنظيمها لتحقيق الأهداف التعليمية المحددة.</p>
+                    <h4>1. مكونات المحتوى المعرفي:</h4>
+                    <p>يتألف المحتوى من بنية معرفية هرمية تشمل:</p>
+                    <ul>
+                        <li><strong>الحقائق (Facts):</strong> معلومات جزئية ثبتت صحتها، ولا تحتاج إلى برهان. <em>(مثل: تشرق الشمس من الشرق، عاصمة مصر هي القاهرة).</em></li>
+                        <li><strong>المفاهيم (Concepts):</strong> تجريد للعناصر المشتركة بين مجموعة من الظواهر أو الأشياء وإطلاق مصطلح عليها. <em>(مثل: الطائر، العدالة، الديمقراطية، المادة).</em></li>
+                        <li><strong>التعميمات والمبادئ (Generalizations & Principles):</strong> عبارات توضح العلاقة بين مفهومين أو أكثر. <em>(مثل: المعادن تتمدد بالحرارة، كلما زاد الطلب ارتفع السعر).</em></li>
+                        <li><strong>القوانين والنظريات (Laws & Theories):</strong> قمة الهرم المعرفي، وهي عبارة عن تعميمات وأفكار مترابطة تم التحقق من صحتها تجريبياً لتفسير ظواهر معينة. <em>(مثل: نظرية الجاذبية، قانون فيثاغورس).</em></li>
+                    </ul>
+
+                    <h4>2. معايير اختيار المحتوى:</h4>
+                    <ul>
+                        <li><strong>الصدق والأهمية:</strong> أن تكون المعلومات صحيحة ودقيقة علمياً ومحدثة، وأن تكون ذات قيمة للمتعلم.</li>
+                        <li><strong>الارتباط بالواقع الثقافي والاجتماعي:</strong> أن يعكس المحتوى قيم المجتمع، وعاداته، ومشكلاته، وتطلعاته.</li>
+                        <li><strong>التوازن بين العمق والشمول:</strong> ألّا يطغى التفصيل الممل على حساب شمول الأفكار، والعكس صحيح.</li>
+                        <li><strong>مراعاة الفروق الفردية وحاجات الطلاب:</strong> ملاءمة المحتوى للمستوى العقلي والزمني للمتعلمين.</li>
+                        <li><strong>القابلية للتعلم والتدريس:</strong> إمكانية تنفيذه عملياً في المدارس ضمن الإمكانيات والوقت المتاح.</li>
+                    </ul>
+
+                    <h4>3. تنظيم المحتوى:</h4>
+                    <p>يُنظم المحتوى باتجاهين رئيسيين:</p>
+                    <ul>
+                        <li><strong>التنظيم المنطقي:</strong> ترتيب المادة طبقاً لطبيعتها الخاصة وتدرجها العلمي (من السهل إلى الصعب، من البسيط إلى المركب، من الجزء إلى الكل، أو الترتيب التاريخي للأحداث).</li>
+                        <li><strong>التنظيم النفسي:</strong> ترتيب المادة بناءً على قدرات الطلاب، وميولهم، واستعداداتهم النفسية والعقلية، ومدى ارتباط المادة بخبراتهم الحياتية الواقعية.</li>
+                        <li><strong>التكامل (الأفقي والرأسي):</strong>
+                            <ul>
+                                <li><em>التكامل الرأسي (الاستمرارية):</em> ترابط المادة من سنة دراسية إلى أخرى (مثلاً: ما يدرسه الطالب في الرياضيات في الصف الأول الإعدادي يبنى عليه في الصف الثاني الإعدادي).</li>
+                                <li><em>التكامل الأفقي (الاتساق):</em> ترابط المواد المختلفة المعطاة في نفس السنة الدراسية (مثلاً: الربط بين موضوع في التاريخ وموضوع في الجغرافيا أو الأدب في نفس الفصل الدراسي).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <h3>العنصر الثالث: طرق وإستراتيجيات التدريس (Teaching Strategies)</h3>
+                <div class="card">
+                    <p>هي الآليات والوسائل والخطوات والأنشطة المخططة التي يتبعها المعلم داخل الصف لنقل المحتوى وتحقيق الأهداف.</p>
+                    <h4>1. تصنيف طرق التدريس:</h4>
+                    <ul>
+                        <li><strong>أ. طرق تمركزت حول المعلم (التقليدية):</strong> يكون المعلم فيها هو المصدر الوحيد للمعلومة، ودور الطالب سلبي (مستمع متلقٍ). <em>أبرزها:</em> طريقة الإلقاء (المحاضرة).</li>
+                        <li><strong>ب. طرق تمركزت حول المتعلم (الحديثة):</strong> يكون الطالب فيها هو محور العملية التعليمية (باحث، ومستكشف، ومشارك)، والمعلم موجه وميسر. <em>أبرزها:</em> طريقة حل المشكلات، الاستقصاء، الاكتشاف، التعلم التعاوني، والمشروعات.</li>
+                        <li><strong>ج. طرق تفاعلية مشتركة:</strong> تقوم على الحوار والمناقشة المتبادلة بين المعلم والطلاب وبين الطلاب وأنفسهم.</li>
+                    </ul>
+                    <h4>2. معايير اختيار طريقة التدريس الناجحة:</h4>
+                    <p>لا توجد طريقة تدريس واحدة مثالية لكل المواقف، بل تعتمد الطريقة الناجحة على مدى ملاءمتها لـ:</p>
+                    <ul>
+                        <li>طبيعة الأهداف التعليمية المراد تحقيقها.</li>
+                        <li>طبيعة المحتوى المعرفي (العملي يحتاج مختبرات، والنظري قد يحتاج مناقشة).</li>
+                        <li>الخصائص السيكولوجية والعمرية للطلاب وفروقهم الفردية.</li>
+                        <li>الوقت المتاح للحصة الدراسية.</li>
+                        <li>الإمكانات والوسائل والتقنيات التعليمية المتوفرة بالمدرسة.</li>
+                    </ul>
+                </div>
+
+                <h3>العنصر الرابع: الأنشطة التعليمية والوسائل (Educational Activities & Media)</h3>
+                <div class="card">
+                    <p>النشاط التعليمي هو كل فعل أو ممارسة (ذهنية، عضلية، أو وجدانية) يقوم بها المتعلم داخل الصف أو خارجه تحت إشراف المدرسة، لإكسابه خبرات مباشرة تؤدي لتحقيق الأهداف.</p>
+                    <h4>1. أنواع الأنشطة:</h4>
+                    <ul>
+                        <li><strong>أنشطة صفية:</strong> تتم داخل غرفة الصف أثناء الحصة الدراسية. <em>(مثل: القراءة، حل التمارين على السبورة، الإجابة عن الأسئلة، رسم خريطة سريعة).</em></li>
+                        <li><strong>أنشطة لا صفية:</strong> تتم خارج غرفة الصف أو خارج المدرسة لكن بتخطيط منها. <em>(مثل: الرحلات العلمية الميدانية، الزيارات للمتاحف، الجمعيات المدرسية كجماعة الصحافة أو الإذاعة، التجارب الحرة في حديقة المدرسة).</em></li>
+                    </ul>
+                    <h4>2. أهمية الأنشطة والوسائل:</h4>
+                    <ul>
+                        <li>تحويل المفاهيم المجردة إلى خبرات ملموسة ومحسوسة وسهلة الفهم.</li>
+                        <li>مراعاة الفروق الفردية (فالطالب البصري يستفيد من الصور، والحركي يستفيد من المجسمات والفك والتركيب).</li>
+                        <li>زيادة دافعية الطلاب نحو التعلم، وجعل البيئة المدرسية بيئة جاذبة وممتعة.</li>
+                        <li>تنمية الروح الاجتماعية والعمل الجماعي والمسؤولية لدى الطلاب.</li>
+                    </ul>
+                </div>
+
+                <h3>العنصر الخامس: التقويم التربوي (Educational Evaluation)</h3>
+                <div class="card">
+                    <p>هو عملية منظمة تهدف إلى جمع بيانات ومعلومات دقيقة عن كافة عناصر العملية التعليمية، وإصدار أحكام عليها، وتشخيص نقاط القوة والضعف، واتخاذ القرارات المناسبة للتعديل والتطوير.</p>
+                    <h4>1. التمييز بين المفاهيم المتقاطعة:</h4>
+                    <ul>
+                        <li><strong>القياس (Measurement):</strong> إعطاء تقدير كمي (رقمي) لصفة أو سلوك معين باستخدام أداة محددة. <em>(مثال: حصل الطالب على 15 من 20 في اختبار النحو).</em></li>
+                        <li><strong>التقييم (Assessment):</strong> تشخيص وتحديد مواطن القوة والضعف وإصدار حكم قيمي بناءً على نتائج القياس دون اتخاذ إجراء علاجي بالضرورة. <em>(مثال: مستوى الطالب في النحو "متوسط" أو "ضعيف").</em></li>
+                        <li><strong>التقويم (Evaluation):</strong> يشمل القياس والتقييم معاً، بالإضافة إلى <strong>التعديل والعلاج والاصلاح</strong>. <em>(مثال: الطالب ضعيف في النحو، إذن نضع له خطة علاجية وتقوية لرفع مستواه).</em> التقويم = (تشخيص + علاج).</li>
+                    </ul>
+
+                    <h4>2. أنواع التقويم بحسب وقت التنفيذ:</h4>
+                    <ul>
+                        <li><strong>أ. التقويم القبلي (التشخيصي / التمهيدي):</strong> يتم قبل البدء في دراسة المنهج أو الوحدة. يهدف لتحديد مستوى الطلاب وخلفياتهم المعرفية للتأكد من مدى استعدادهم للتعلم الجديد، ولتوزيعهم أو لتصميم بداية الدرس.</li>
+                        <li><strong>ب. التقويم التكويني (البنائي / المستمر):</strong> يتم أثناء سير العملية التعليمية وخلال شرح الدرس أو الوحدة. يهدف لتزويد المعلم والمتعلم بـ "تغذية راجعة" مستمرة لتعديل مسار الشرح والتعلم أولاً بأول وعلاج الأخطاء فوراً.</li>
+                        <li><strong>ج. التقويم الختامي (النهائي / التجميعي):</strong> يتم في نهاية الدرس، أو الوحدة، أو الفصل الدراسي، أو العام الدراسي. يهدف لإصدار الأحكام النهائية على مستوى الطلاب، ومنح الشهادات، ونقل الطلاب من مرحلة لأخرى، وتقييم مدى كفاءة المنهج ككل.</li>
+                    </ul>
+
+                    <h4>3. شروط وأسس التقويم الجيد:</h4>
+                    <ul>
+                        <li><strong>الشمول:</strong> أن يشمل التقويم كافة جوانب نمو الشخصية (معرفي، وجداني، ومهاري) وكافة عناصر المنهج.</li>
+                        <li><strong>الاستمرارية:</strong> أن يكون مواكباً للعملية التعليمية من بدايتها حتى نهايتها وليس مجرد حدث مفاجئ في الختام.</li>
+                        <li><strong>الموضوعية:</strong> ألّا تتأثر نتائج التقويم وأحكامه بذاتية المصحح أو المعلم وآرائه الشخصية.</li>
+                        <li><strong>التنوع:</strong> استخدام أدوات وتقنيات تقويمية متعددة (اختبارات تحريرية، اختبارات شفوية، ملاحظة، ملفات إنجاز، مشاريع).</li>
+                        <li><strong>الاتساق والترابط:</strong> أن يتسق التقويم تماماً مع الأهداف التعليمية المصاغة في البداية ومع المحتوى الذي تم تدريسه فعلياً.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- CHAPTER 3 -->
+            <section id="chap3" class="content-section">
+                <h2>الفصل الثالث: أسس بناء المنهج المدرسي</h2>
+                <div class="card">
+                    <p>يقوم بناء أي منهج مدرسي على أربعة أسس رئيسة متكاملة يتكئ عليها المخططون عند التصميم والتطوير. وأي خلل أو ضعف في أحد هذه الأسس يؤدي بالضرورة إلى خلل وضعف ينعكس على المنهج بأكمله. كما يجب على "المعلم" كمنفذ للمنهج أن يكون على وعي وفهم كاملين بهذه الأسس لينطلق منها أثناء تقديم المحتوى، أو المهارات، أو القيم.</p>
+                </div>
+
+                <div class="mindmap-container">
+                    <div class="mindmap-title">🌳 خريطة ذهنية تفاعلية: أسس بناء المنهج الأربعة</div>
+                    <ul class="tree">
+                        <li>
+                            <span class="node root">أسس المنهج</span>
+                            <ul>
+                                <li>
+                                    <span class="node branch">1. الأساس الفلسفي / العقائدي</span>
+                                    <ul>
+                                        <li><span class="node">الوضعي: فلسفات إنسانية متغيرة قابلة للنقد والسقوط</span></li>
+                                        <li><span class="node">العقائدي الإسلامي: شرعي رباني ثابت جامع لكل مفيد ونافع</span></li>
+                                        <li><span class="node">الفلسفة لغة واصطلاحاً: حب الحكمة (فيلو-سوفيا)، صيغة شاملة لفهم الكون</span></li>
+                                        <li><span class="node">المدرسة التقليدية (المثالية): أفلاطون، أزلية الأفكار، نقل التراث المعرفي، إهمال المهارات والميول</span></li>
+                                        <li><span class="node">المدرسة التقدمية (البرجماتية): ديوي وبيرس، العمل برهان الفكرة، تلبية الميول، حل المشكلات والمرونة</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span class="node branch">2. الأساس المعرفي (العلمي)</span>
+                                    <ul>
+                                        <li><span class="node">التطور التاريخي: قديماً (بسيطة ومحدودة والعالم ملم بالفنون)، حديثاً (انفجار معرفي وتخصصات دقيقة)</span></li>
+                                        <li><span class="node">طبيعة المعرفة إسلامياً: فريق 1 (فطرية توقيفية كامنة منذ الولادة)، فريق 2 (مكتسبة عبر العقل والحواس)</span></li>
+                                        <li><span class="node">مصادر المعرفة الخمسة: الوحي، العقل، التراث، الحواس، الحدس</span></li>
+                                        <li><span class="node">مصادر التصميم الستة: البحوث، الخبراء، المعلمون، الطلاب، أولياء الأمور، قطاعات العمل</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span class="node branch">3. الأساس الاجتماعي</span>
+                                    <ul>
+                                        <li><span class="node">المفهوم: مقومات وركائز المجتمع (عادات، تقاليد، قيم، مشكلات)</span></li>
+                                        <li><span class="node">مكونات الثقافة (جودت سعادة): العموميات (اللغة والزي)، الخصوصيات (المهن)، البديلات المتغيرات</span></li>
+                                        <li><span class="node">الأدوار الاجتماعية الخمسة للمنهج: خبرات غنية، إعداد فرد متكيف، إذابة حواجز النظرية والتطبيق، تخطيط علمي تعاوني، تربية أسرية مستدامة</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span class="node branch">4. الأساس النفسي</span>
+                                    <ul>
+                                        <li><span class="node">مجالات النمو الأربعة: القدرات والاستعدادات، حاجات التلاميذ، ميول التلاميذ، اتجاهات التلاميذ</span></li>
+                                        <li><span class="node">مبادئ التعلم الخمسة (مندور فتح الله): ملائمة النضج، الارتباط بالدوافع والأغراض، مراعاة الفروق الفردية في السرعة، تعلم أشياء متعددة معاً، الاتصال بالحياة الواقعية</span></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <h3>الأساس الأول: الأساس الفلسفي أو العقائدي (الفكري)</h3>
+                <div class="card">
+                    <p>هو الإطار المرجعي والخلفية الفكرية التي تنطلق منها الفلسفة التربوية التي يؤمن بها واضع المنهج.</p>
+                    <h4>1. التمييز بين الأساس الفلسفي والأساس العقائدي الإسلامي:</h4>
+                    <ul>
+                        <li><strong>الأساس الفلسفي (الوضعي):</strong> يبنى على فلسفات إنسانية وضعية، وهي عادة تكون قابلة للتغيير، والتطور، والنقد، والسقوط.</li>
+                        <li><strong>الأساس العقائدي (الشرعي الرباني):</strong> هو المطبق في الشريعة الإسلامية ووفق التصور الإسلامي. ويتميز بأن مصدره إلهي، وهو ثابت، وجامع لكل جيد ومفيد ونابذ لكل سيء وضار.</li>
+                    </ul>
+
+                    <h4>2. مفهوم الفلسفة لغة واصطلاحاً:</h4>
+                    <ul>
+                        <li><strong>لغةً:</strong> كلمة ذات أصل يوناني مكونة من شقين: (Philo) وتعني المحبة أو الميل، و(Sophia) وتعني الحكمة، وبذلك يكون معناها "حب الحكمة".</li>
+                        <li><strong>اصطلاحاً:</strong> صيغة شاملة لفهم الكون والحياة، ومحاولة منظمة مستمرة للتأمل فيها بطريقة دائمة وثابتة. وعرفها الألوسي بأنها محاولة دقيقة منظمة للربط بين الكون والحياة البشرية لكشف طبيعة الكون وعلاقتنا به وتوسيع معرفتنا وإشباع حب الاستطلاع.</li>
+                        <li><strong>طبيعة الفيلسوف:</strong> يرى كارل جاسبرس أن جوهر الفلسفة هو "البحث عن المعرفة وليس امتلاكها"، فالذي يمتلك المعرفة هو العالم، أما الفيلسوف فهو باحث عنها.</li>
+                    </ul>
+
+                    <h4>3. المدارس الفلسفية وتأثيرها على المنهج:</h4>
+                    <h5>أ. الفلسفة التقليدية (المثالية / الأساسية):</h5>
+                    <p><strong>نشأتها:</strong> تعود جذورها للمجتمع اليوناني القديم المقسم لثلاث طبقات (الأحرار، الجنود، العبيد). برز فيها أفلاطون الذي يرى أن الأفكار والمعلومات أزلية وثابتة، وأن عقل الإنسان (طبقة الأحرار فقط) هو أداة فهمها.</p>
+                    <p><strong>مسلماتها:</strong> العمل منفصل عن الفكر والفكر يسمو عليه، المعرفة التأملية تفوق المعرفة العملية وهي مصدر الحقيقة.</p>
+                    <p><strong>انعكاسها على المنهج:</strong> وظيفة المنهج هي نقل التراث الثقافي وحفظه والتركيز على الجانب المعرفي فقط. يتم إهمال الجوانب المهارية والوجدانية والأنشطة، ولا تُراعى ميول المتعلمين ولا الفروق الفردية. تسببت في ظهور "منهج المواد المنفصلة" والتعزيز المصطنع للانفصال بين العلوم الإنسانية والطبيعية.</p>
+
+                    <h5>ب. الفلسفة التقدمية (البرجماتية / النفعية):</h5>
+                    <p><strong>نشأتها:</strong> تطورت في العصر الحديث في أمريكا على يد شارلز بيرس وجون ديوي لتضاد الفلسفة التقليدية.</p>
+                    <p><strong>أفكارها:</strong> الفكرة الصالحة هي التي تقود إلى العمل، والعمل برهان صحة الفكرة، والعقل ليس مجرد أداة للمعرفة بل هو أداة للحياة.</p>
+                    <p><strong>انعكاسها على المنهج:</strong> ينمو المنهج ويتطور في ضوء علاقته بميول التلاميذ وحاجاتهم. تسلح الفرد بالمهارات والتفكير العلمي وحل المشكلات. المتعلم يكون إيجابياً ونشطاً، والمعلم ميسر ومساعد. يتسم المنهج بالمرونة وإزالة الحواجز بين المواد، مما أدى لظهور "منهج النشاط" و"المنهج المحوري".</p>
+                </div>
+
+                <h3>الأساس الثاني: الأساس المعرفي (العلمي)</h3>
+                <div class="card">
+                    <p>يتعلق ببنية المعرفة وحقائقها؛ فكل علم له بناء منظم. والمعرفة شرط لإنسانية الإنسان وترتكز على اكتسابها المستمر.</p>
+                    
+                    <h4>1. التطور التاريخي للمعرفة البشريّة:</h4>
+                    <ul>
+                        <li><strong>قديماً:</strong> كانت المعرفة محدودة وبسيطة، وكان العالم الواحد ملماً ومؤلفاً في علوم مختلفة ومتعددة (العلوم الشرعية، اللغوية، التاريخ، الطب، الفلك، الزراعة) في آن واحد.</li>
+                        <li><strong>حديثاً:</strong> توسعت المعارف وتقسمت إلى مجالات معرفية متمايزة (علوم، رياضيات، دراسات)، ثم تقسمت إلى "تخصصات دقيقة" حتى وصلنا إلى ثورة المعلومات الحالية والإنفجار المعرفي الذي شكل تحدياً كبيراً لعلماء المناهج.</li>
+                    </ul>
+
+                    <h4>2. طبيعة المعرفة في الفكر التربوي الإسلامي:</h4>
+                    <p>انقسم العلماء حيال كيفية العلم بالأشياء وطبيعتها إلى فريقين:</p>
+                    <ul>
+                        <li><strong>الفريق الأول ( المعرفة فطرية توقيفية):</strong> يرى أن الحقائق والمعلومات موجودة كامنة ومضمرة في نفس الإنسان منذ الولادة وتحتاج فقط إلى تحريك وإثارة لتخرج. حجتهم البديهيات، ويستدلون بقوله تعالى: ﴿وَعَلَّمَ آدَمَ الْأَسْمَاءَ كُلَّهَا﴾.</li>
+                        <li><strong>الفريق الثاني (المعرفة مكتسبة):</strong> يرى أن الإنسان يولد وهو لا يعلم شيئاً مطلقاً، ويكتسب العلم عبر العقل والحواس. ويستدلون بقوله تعالى: ﴿وَاللَّهُ أَخْرَجَكُمْ مِنْ بُطُونِ أُمَّهَاتِكُمْ لَا تَعْلَمُونَ شَيْئًا﴾.</li>
+                        <li><strong>الانعكاس التربوي:</strong> الرأي الثاني (المكتسب) ينسجم تماماً مع التربية الحديثة التي تؤكد على إيجابية المتعلم ونشاطه واكتشافه للحقائق بنفسه.</li>
+                    </ul>
+
+                    <h4>3. مصادر المعرفة العامّة:</h4>
+                    <p>تُستمد المعرفة من خمسة مصادر أساسية:</p>
+                    <ol>
+                        <li><strong>الوحي:</strong> القرآن والسنة وما فيهما من تشريع وعبر وقصص.</li>
+                        <li><strong>العقل:</strong> عملية التفكير البحتة التي تربط الأفكار للإتيان بجديد.</li>
+                        <li><strong>التراث:</strong> الموروث الثقافي والتقاليد والأعراف.</li>
+                        <li><strong>الحواس:</strong> السمع، البصر، اللمس، الشم، والتذوق.</li>
+                        <li><strong>الحدس:</strong> القدرة الباطنة على فهم الحقيقة مباشرة دون حواس أو تفكير منطقي.</li>
+                    </ol>
+
+                    <h4>4. المصادر المعرفية لتصميم المنهج المدرسي:</h4>
+                    <p>يختار واضعو المناهج المعارف المناسبة من ستة مصادر ووجهات نظر:</p>
+                    <ul>
+                        <li>نتائج البحوث والدراسات العلمية: التوصيات الناتجة عن تجريب الأفكار علمياً.</li>
+                        <li>وجهة نظر الخبراء والمختصين: لتمكنهم العميق في مجالات تخصصهم.</li>
+                        <li>وجهة نظر المعلمين: لخبرتهم الميدانية المباشرة في إيصال المعرفة للطلاب.</li>
+                        <li>وجهة نظر الطلاب: معرفة الأسئلة التي تدور في أذهانهم ويبحثون عن إجابات لها.</li>
+                        <li>وجهة نظر أولياء الأمور: باعتبار الأسرة هي المؤسسة التربوية الأولى.</li>
+                        <li>وجهة نظر أصحاب قطاعات العمل: لتحديد نوعية التأهيل والمهارات المطلوبة لسوق العمل.</li>
+                    </ul>
+                </div>
+
+                <h3>الأساس الثالث: الأساس الاجتماعي</h3>
+                <div class="card">
+                    <p>يقصد به مجموعة المقومات والركائز ذات العلاقة بالمجتمع (ظروفه، عاداته، تقاليده، قيمها، طموحاته، ومشكلاته) والتي يجب مراعاتها عند التخطيط للمنهج أو تطويره. ويُعد الأساس الاجتماعي من أقوى أسس المنهج تأثيراً.</p>
+                    
+                    <h4>1. مفهوم المجتمع وعلاقته بالمنهج:</h4>
+                    <p>المجتمع هو إطار عام يحدد العلاقات بين جمع من الأفراد المستقرين في بيئة معينة، تجمعهم أهداف مشتركة ومنافع متبادلة، وتحكمهم قيم وقواعد منظمة لسلوكهم. والمنهج المدرسي يسهم في إعداد الأجيال بالصورة التي تتفق مع الفلسفة التي يؤمن بها هذا المجتمع.</p>
+
+                    <h4>2. ثقافة المجتمع ومكوناتها وعلاقتها بالمنهج:</h4>
+                    <ul>
+                        <li><strong>مفهوم الثقافة:</strong> النسيج الكلي من الأفكار، المعتقدات، العادات، التقاليد، الاتجاهات، القيم، وأساليب التفكير والعمل في حياة الناس.</li>
+                        <li><strong>مكونات الثقافة الثلاثة (حسب تقسيم جودت سعادة):</strong>
+                            <ul>
+                                <li><strong>العموميات:</strong> ما يشترك فيه غالبية أفراد المجتمع (كالغة، والزي، والتقاليد العامة)، وتهتم الدولة بنشرها عبر التعليم الإلزامي الأولي.</li>
+                                <li><strong>الخصوصيات:</strong> أنماط سلوك خاصة بقطاع أو فئة أو مهنة معينة (مثل خصوصية الأطباء، المهندسين، أو المعلمين).</li>
+                                <li><strong>البديلات (المتغيرات):</strong> أنماط ثقافية يشترك فيها عدد محدود من الأفراد وهي متغيرة ومتجددة (كاتباع طريقة حديثة في التربية أو أسلوب جديد في العمل).</li>
+                            </ul>
+                        </li>
+                        <li><strong>خصائص الثقافة:</strong> (إنسانية، قابلة للنقل والنشر عبر الأجيال، مكتسبة وليست فطرية، مشبعة لحاجات الإنسان، متغيرة، وتتفاعل عناصرها باستمرار). تفرض هذه الخصائص على المنهج أن يتصف بالمرونة والقدرة على التطور منعاً لجموده وتخلفه.</li>
+                    </ul>
+
+                    <h4>3. الأدوار الاجتماعية الخمسة للمنهج المدرسي:</h4>
+                    <ol>
+                        <li>يتضمن محتواه خبرات غنية ومتطورة.</li>
+                        <li>يعمل على إعداد فرد متعلم قادر على الاتساق والتكيف مع مجتمعه وعصره.</li>
+                        <li>يذيب الحواجز بين النظر والتطبيق لتطوير المجتمع.</li>
+                        <li>يقوم تخطيط التعليم فيه على أساس علمي تعاوني يحدد أهداف المجتمع وحاجاته.</li>
+                        <li>يهتم بالتربية الأسرية للفرد لإحداث التربية المستدامة.</li>
+                    </ol>
+                </div>
+
+                <h3>الأساس الرابع: الأساس النفسي</h3>
+                <div class="card">
+                    <p>يقصد به المبادئ النفسية التي توصلت إليها بحوث علم النفس حول طبيعة المتعلم (خصائص نموه، حاجاته، ميوله، قدراته، واستعداداته)، وطبيعة عملية التعلم ذاتها. وحيث إن التعلم هو "تغير في السلوك"، فإن وظيفة المنهج هي إحداث هذا التغير.</p>
+                    
+                    <h4>1. المنهج ونمو المتعلم (مجالات النمو الأربعة):</h4>
+                    <h5>أ. القدرات والاستعدادات:</h5>
+                    <ul>
+                        <li>يختلف الطلاب في قدراتهم العقلية، لذا يجب أن يركز المنهج على تنمية القدرات التي تفيد التلميذ في حياته (كالتعبير، التحليل، التفكير، وحل المشكلات).</li>
+                        <li>يجب تنويع طرق التدريس والأنشطة لمواجهة الفروق الفردية، وتخطيط التعلم في ضوئها.</li>
+                    </ul>
+                    <h5>ب. حاجات التلاميذ:</h5>
+                    <ul>
+                        <li>الحاجة تدفع الإنسان إلى سلوك يستهدف الحفاظ على نفسه.</li>
+                        <li>دور المنهج نحو الحاجات: احتواء أنشطة فردية وجماعية متنوعة تناسب حاجاتهم، وتنويع طرق التدريس ليشبع المنهج "الحاجة إلى المعرفة"، وتنمية التفكير ليحلوا مشكلاتهم.</li>
+                    </ul>
+                    <h5>ج. ميول التلاميذ:</h5>
+                    <ul>
+                        <li>الميل: شعور عند الفرد يدفعه إلى الاهتمام أو التفضيل ويكون مصحوباً بالارتياح. وهناك علاقة طردية قوية بين الميول وإشباع الحاجات.</li>
+                        <li>دور المنهج نحو الميول: التأكيد على الميول النافعة للفرد والجماعة، وأن يؤدي إشباع الميول الحالية إلى ظهور ميول جديدة مفيدة في اتجاهات مختلفة لتأمين الاستمرارية.</li>
+                    </ul>
+                    <h5>د. اتجاهات التلاميذ:</h5>
+                    <ul>
+                        <li>تشترك مع الميول والحاجات في توجيه السلوك.</li>
+                        <li>دور المنهج نحو الاتجاهات: التركيز على الاتجاهات النافعة والتصدي للضارة عبر المحتوى والأنشطة، تنمية الاتجاهات اللازمة للتطور العلمي (كالدراسات المهنية والتطبيقية)، واستخدام الحوافز والمعززات الإيجابية (مثل جائزة الفصل النظيف أو المتعاون).</li>
+                    </ul>
+
+                    <h4>2. المنهج وطبيعة عملية التعلم:</h4>
+                    <p><strong>تعريف التعلم اصطلاحاً:</strong> عملية نفسية يتم فيها التفاعل بين المتعلم ومادة التعلم، بحيث تؤدي إلى تغيرات سلوكية لديه. ولا يمكن ملاحظة التعلم مباشرة بل نُستدل عليه من التغير الظاهر في السلوك.</p>
+                    <p><strong>المبادئ الخمسة للتعلم وانعكاساتها المنهجية (حسب مندور فتح الله):</strong></p>
+                    <ol>
+                        <li>يتعلم التلاميذ بشكل أفضل إذا كان العمل ملائماً لمستوى نضجهم (عدم إثقال المنهج بموضوعات تفوق سنهم).</li>
+                        <li>يكون التعلم أكثر كفاية حين يرتبط بأغراض ودوافع التلميذ الحقيقية، مما يمنحه معنى ويدعم روح الابتكار والاستقلالية.</li>
+                        <li>يختلف كل تلميذ عن الآخر في سرعة تعلمه، لذا يجب توفير خبرات متنوعة تناسب المستويات المختلفة (مراعاة الفروق الفردية).</li>
+                        <li>يتعلم التلميذ عدة أشياء في آن واحد، لذا يجب على الموقف التعليمي الواحد في المنهج أن ينمي جوانب متعددة معاً.</li>
+                        <li>يتعلم التلميذ بطريقة أفضل نتيجة الخبرات المتصلة بالحياة الواقعية (خاصة عبر إستراتيجية حل المشكلات تحت إشراف المعلم).</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- CHAPTER 4 -->
+            <section id="chap4" class="content-section">
+                <h2>الفصل الرابع: نظريات المنهج المدرسي</h2>
+                
+                <div class="mindmap-container">
+                    <div class="mindmap-title">🌳 خريطة ذهنية تفاعلية: نظريات ونماذج المنهج الكبرى</div>
+                    <ul class="tree">
+                        <li>
+                            <span class="node root">نظريات المنهج</span>
+                            <ul>
+                                <li>
+                                    <span class="node branch">أولاً: النظريات الأربعة الكبرى</span>
+                                    <ul>
+                                        <li><span class="node">1. الموسوعية: كومينيوس (1670)، نشر المعرفة الشاملة، سمو العقل، المدارس حوانيت معرفة والمناهج قواميس مكتظة</span></li>
+                                        <li><span class="node">2. الجوهرية: وليم باجلي (1938)، أساسيات وجوهر المعرفة، محافظة لنقل التراث، سلطة كاملة للمعلم، التعلم جهد وعمل شاق</span></li>
+                                        <li><span class="node">3. البرجماتية: بيرس وجيمس وديوي، وظيفة المعرفة ونتاج تفاعل، الطفل مركز العملية، المنهج مرن مشكلات ومشروعات، مدرسة شيكاغو</span></li>
+                                        <li><span class="node">4. البوليتكنيكية (التطبيقية): ربط المدرسة بالحياة الإنتاجية، غرس العادات الفنية والعمل اليدوي، النظام السوفيتي والصيني (الورش التعليمية)</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span class="node branch">ثانياً: نماذج التخطيط الستة</span>
+                                    <ul>
+                                        <li><span class="node">1. تايلر (1949): التحليل خطوة بخطوة عبر 4 أسئلة (أهداف -> خبرات -> تنظيم -> تقويم ختامي). 5 مصادر للأهداف</span></li>
+                                        <li><span class="node">2. مكدونالد: 4 أنظمة متداخلة تشكل بؤرة النظام الاجتماعي (المنهج، العملية التعليمية، التعليم، التعلم)</span></li>
+                                        <li><span class="node">3. تابا (1962): مراجعة وتطوير تايلر لـ 7 خطوات خطية، إبراز العلاقة الطردية بين الحاجات والأهداف، تقويم نهائي</span></li>
+                                        <li><span class="node">4. ويلر: عملية دائرية مستمرة تفاعلية من 5 مراحل متصلة تضمن التجدد والتغذية الراجعة مباشرة للأهداف</span></li>
+                                        <li><span class="node">5. بوشامب: منظومة تفاعلية شاملة (مدخلات الفكر والمجتمع -> عمليات التخطيط والتنفيذ -> مخرجات المنهج المكتوب)</span></li>
+                                        <li><span class="node">6. زايس: شكل هندسي مترابط بأسهم تبادلية في كل الاتجاهات بين العناصر الـ 4، تركيز على التغذية الراجعة والمحتوى المعرفي مستقل</span></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <h3>أولاً: نشأة حركة التنظير في مجال المناهج</h3>
+                <div class="card">
+                    <ul>
+                        <li><strong>البداية التاريخية:</strong> يُعتبر كتاب العالم بوبيت (Bobbitt) الصادر عام 1918م تحت عنوان "المنهج" هو نقطة البداية الحقيقية للتنظير العلمي في مجال المناهج.</li>
+                        <li><strong>المنحنى العلمي وتأثير التكنولوجيا:</strong> أوجدت الحركة العلمية في التربية منحنى مهماً في النظرية؛ حيث طالب بوبيت المربين باستعارة الكثير من أمور "التكنولوجيا الجديدة" لتوجيه عملية جعل التربية مهنة (تمهين التربية). وكان يؤمن بأن مبادئ الإدارة وتطبيق النظرية يساعدان المربين على تصميم البرامج وإدارتها بوضوح وفاعلية أكبر.</li>
+                        <li><strong>طبيعة النظرية العلمية ووظيفتها:</strong> نُظر إلى النظرية العلمية على أن لها قدرة من الموضوعية، وهي تقدم خدمة كبرى عبر وصف كيفية الشيء وتوضيحه. والنظرية الخاصة بظاهرة ما تسمح للمربين بالتنبؤ بخطوات وضع هذه الظاهرة في مجال التطبيق العملي.</li>
+                        <li><strong>المدرسة التجريبية بجامعة كولومبيا:</strong> أُنشئت مدرسة تجريبية في كلية المعلمين بجامعة كولومبيا الأمريكية لتمكين التربويين من تقصي النظريات التربوية واختبارها. واعتقد المربون أن النظرية العلمية تزيد من فهم المنهج نفسه.</li>
+                        <li><strong>دور الإحصاء والاختبارات:</strong> ساعدت الاكتشافات الجديدة في مجال الاختبارات والإحصاءات التربوية المربين الراغبين في بناء النظرية، ووفرت لهم أدوات تمكنهم من إجراء دراسات بحذر ودقة أكبر مع البيانات الإحصائية المجمعة.</li>
+                        <li><strong>إسهامات جون ديوي (Dewey) في التنظير:</strong>
+                            <ul>
+                                <li>انشغل ديوي خلال السنوات الأولى من القرن العشرين بإيجاد نظرية للمهج.</li>
+                                <li>استُبطت نظريته من فكرة أن "تطور الفرد وتطور الجنس البشري متشابهان في المراحل العامة".</li>
+                                <li>حاولت نظريته توضيح العلاقة بين المدارس والمجتمع ومختلف جوانب الخبرة والتربية، وارتباطها التام بالمتعلم نفسه.</li>
+                                <li>طالب ديوي المربين بربط المعرفة في المنهج بالخبرات الإنسانية ذات العلاقة بالأطفال، والتركيز على مرور الأطفال بخبرة معرفية من خلال الأنشطة المتنوعة.</li>
+                            </ul>
+                        </li>
+                        <li><strong>المنهج المتمركز حول الخبرة:</strong> يعتمد هذا المنهج في أساسه النظري على نظرية ديوي، وهي التي أعطت دفعة قوية لحركة النشاط.</li>
+                        <li><strong>مدرسة شيكاغو التجريبية:</strong> حاول ديوي من خلال مدرسته الابتدائية التجريبية الملحقة بجامعة شيكاغو توفير الظروف الحقيقية لواقع الحياة الاجتماعية، ليتعلم الأطفال عن الحياة ويمارسون الواقع كما هو، ويشاركون في عملية "التعلم بالعمل".</li>
+                        <li><strong>فترة العشرينيات والثلاثينيات:</strong> اتجه معظم المتخصصين في المناهج خلال هاتين العشرريتين نحو "المنهج المتمركز حول الطفل"، ولم يعملوا على إضافة ما هو مطلوب من نظرية المنهج أو دمج المبادئ العلمية في المنهج المدرسي.</li>
+                    </ul>
+                </div>
+
+                <h3>ثانياً: أنواع النظريات الكبرى للمنهج المدرسي</h3>
+                <p>صنّف علماء المناهج الفكر التربوي إلى أربع نظريات أساسية تحكم صياغة المناهج وتطبيقها:</p>
+
+                <h4>1. النظرية الموسوعية (The Encyclopedic Theory)</h4>
+                <div class="card">
+                    <p><strong>الجذور التاريخية:</strong> تمتد جذورها إلى مقولات الحكمة أو المعرفة الشاملة التي نادى بها كومينيوس (Comenius) عام 1670م، وازدهرت بفضل مقترحات أصحاب دوائر المعارف الفرنسيين.</p>
+                    <p><strong>الفلسفة والمنطلقات الفكرية:</strong> نادى أصحابها بأن على كل إنسان أن يتعلم تعليماً كاملاً ويتم تشكيله بصورة صحيحة في جميع الأساليب والوسائل ليستنير بالمعرفة والحكمة الحقيقية (وليس في أمر منفرد فقط). نادوا بسمو العقل على الوحي، واعتقدوا أن الدين يربط العقل بسلاسل الجهل، وأن سعادة الإنسان تكمن في تطوير ذهنه ليكتشف الحقيقة. اعتبروا نشر المعرفة وتطوير العقل البشري عاملين ضروريين لتقدم الجنس البشري. يرون أن كل معارف العالم الحقيقي مفيدة وينبغي أن يتضمنها المنهج؛ لأنه لو تُرِك الأمر للعقل وحده لاضطرد التقدم والرقي.</p>
+                    <p><strong>انعكاساتها على الممارسات المدرسية:</strong> تحلت التربية إلى نشاط ذهني بحت من جانب المتعلم والمعلم؛ لأن المعرفة هي الخير الأسمى. تحولت المدارس إلى "حوانيت للمعرفة" والمعلمون إلى عمال فيها، ووظيفتهم تعبئة رؤوس الصغار بالمعلومات. ازدحمت المناهج بالمواد الدراسية ازدحاماً هائلاً، ونُشِرت سلسلة كتب المطالعة العلمية لاكتساب حقائق العلم دون إغفال أي جزء منها. أصبحت الكتب المدرسية على شكل "قواميس ودوائر معارف"، ويُترَك التلاميذ (خاصة طلبة المدارس الثانوية) ينقبون ويبحثون بأنفسهم وبنشاطهم الخاص عن المعرفة.</p>
+                    <p><strong>مدى تأثيرها تاريخياً وموقفها من المواد:</strong> أثرت بقوة على مناهج المدارس الثانوية الأمريكية وشمال أوروبا وشرقها في القرن التاسع عشر، حتى أصبح المنهج يتكون من عشر مواد فأكثر داخل الصف الواحد. فضّل أصحابها اللغات الحديثة على اللغات الكلاسيكية، والعلوم الطبيعية على الدراسات الإنسانية. وأدى اعتقادهم بأن "المعرفة قوة" إلى الاهتمام بالمادة الدراسية لذاتها، دون ربطها بحياة التلاميذ اليومية أو فائدتها في مواجهة مشكلاتهم.</p>
+                    <p><strong>المشكلات والوضع المعاصر للنظرية:</strong> أحدث انفجار المعرفة والأبحاث التخصصية مشكلة كبيرة في البلاد التي تطبق النظرية الشاملة؛ حيث شعر الناس بحاجة ماسة لدراسات أكثر عمقاً في الصفوف الثانوية تؤهلهم للجامعات. ولذلك يحاول المربون في البلاد التي ورثت هذا المنهج تطبيق تعليم عريض القاعدة مع تقليل عدد المواد إلى عشر مواد غالباً (تشمل: الرياضيات، اللغات الحديثة، العلوم الطبيعية، وبعض العلوم الاجتماعية).</p>
+                </div>
+
+                <h4>2. النظرية الجوهرية - أساسيات المعرفة (The Essentialist Theory)</h4>
+                <div class="card">
+                    <p><strong>النشأة والتعريف:</strong> قام بتعريفها العالم وليم باجلي (William Bagley) عام 1938م.</p>
+                    <p><strong>الفلسفة والمنطلقات الفكرية:</strong> ترى أن هناك جوانب أساسية معينة يجب الإبقاء عليها ومعرفتها من كل الناس ليكونوا متعلمين. يتم انتقاء هذه الجوانب الجوهرية من المعرفة التاريخية والمعاصرة وتضمينها في المنهج وفق تبرير فلسفي. تُعتبر نظرية "محافظة"؛ لأنها ترمي إلى نقل المعتقدات من الجيل القديم إلى الجيل الحديث فالأحدث. تؤكد على إعادة وضع المادة الدراسية في مركز دائرة العملية التربوية، لا من أجل ذاتها، بل لجعلها وثيقة الصلة بالوضع الراهن للفرد. ترى أن عمل المدرسة الأساسي هو تزويد الطلبة بالقوى العقلية والفكرية، ونقل أساسيات المعارف والمهارات.</p>
+                    <p><strong>موقع المعلم في النظرية:</strong> تنادي بإعادة سلطة المعلم داخل الحجرة الدراسية ليكون في مركز العملية العملية التعليمية. ويُشترَط في المعلم أن يكون على قدر كافٍ من التثقيف، ذو معرفة عريضة وفهم عميق لسيكولوجية التلاميذ والتعلم، قادراً على نقل الحقائق، عارفاً بالأصول التاريخية والفلسفية للتربية، وجاداً ومخلصاً في أدائه.</p>
+                    <p><strong>المبادئ الأربعة الأساسية للنظرية الجوهرية:</strong></p>
+                    <ol>
+                        <li><strong>التعلم يتضمن العمل الشاق والجهد:</strong> الاهتمام بموضوع معين يحتاج إلى جهد للسيطرة عليه وإتقانه، وتركز النظرية على مفهوم "الجهد" بدلاً من التركيز على الاهتمامات المباشرة للمتعلم، فالاهتمامات تظهر من خلال العمل الشاق ولا يشعر بها الفرد منذ البداية.</li>
+                        <li><strong>المبادأة بيد المعلم:</strong> دور المعلم هو الوسيط بين عالم الكبار وعالم الأطفال، لذا يجب أن تكون المبادأة بيده لأنه مؤهل لإرشاد التلاميذ وتوجيههم، ويكون المعلم مسيطراً على مكونات الموقف التعليمي والمتعلم تابعاً له.</li>
+                        <li><strong>استيعاب المادة المحددة سلفاً:</strong> جوهر التربية هو استيعاب المادة المقررة، ويجب تقديم المعرفة وفق التنظيم المنطقي للمادة الدراسية، مع وضع التراث الاجتماعي فوق الخبرة الفردية لأنه يلخص خبرات الملايين في التوافق مع بيئتهم.</li>
+                        <li><strong>المحافظة على الطرق التقليدية للانضباط العقلي:</strong> يجب تعليم التلميذ المفاهيم الأساسية مع تطويعها وفق مستواه السيكولوجي والفكري.</li>
+                    </ol>
+                    <p><strong>الأثر التنظيمي:</strong> شاركت هذه النظرية في تشكيل "الطريقة التقليدية" وتنظيم المنهج على أساس "المواد الدراسية المنفصلة" الذي يجعل اكتساب المعلومات الهدف الأول والأهم.</p>
+                </div>
+
+                <h4>3. النظرية البرجماتية (The Pragmatic Theory)</h4>
+                <div class="card">
+                    <p><strong>النشأة والتطور:</strong> تعتبر امتداداً للفلسفة البرجماتية التي تعد إسهاماً أمريكياً فريداً. ترتبط تاريخياً بنظريات طبيعة الذكاء وعمليات التفكير لحل المشكلات. نمت نتيجة الاعتقاد بوجود علاقة وثيقة بين الفكر والعمل، وترجع للفكر التجريبي البريطاني الذي يركز على المعرفة الحسية (نحن نعرف ما تحسه حواسنا فقط). قام بتطويرها ثلاثة مفكرين: بيرس (Peirce)، جيمس (James)، وديوي (Dewey).</p>
+                    <p><strong>طبيعة المعرفة والحركة التقدمية:</strong> تركز على "وظيفة المعرفة"، وترى أنها نتاج التفاعل بين الإنسان وبيئته، وليست شكلاً نهائياً بل عملية مستمرة؛ لأن العقل ناشط ومستكشف وليس سلبياً ومستقبلاً، فالإنسان يكتسب المعرفة من خلال تفاعله مع الواقع. طُبّقت البرجماتية في التربية عبر الحركة التقدمية التي عارضت جمود التربية التقليدية، وأعلنت أن التربية في تطور دائم، ومستعدة لتعديل المنهج في ضوء تغيرات المعرفة والبيئة.</p>
+                    <p><strong>نظرتها للمتعلم والمنهج ودور المعلم:</strong> المتعلم فرد يمر بخبرات، وهو مفكر ومستكشف يدعمه الفضول والاهتمام للتعلم، لذا يجب جعل ما يتعلمه متعلقاً بحاجاته واهتماماته الخاصة بدلاً من تزويده بمعلومات مختارة من الآخرين. يقدم المنهج البرجماتي للتلاميذ: خبرات، دراسات بحثية اجتماعية، مشروعات، مشكلات، وتجارب. يتم تنظيم المحتوى وفق "المشكلات التي يواجهها التلاميذ"، ليكون المنهج صورة مصغرة من المجتمع هدفها تدريب التلاميذ على الحياة التعاونية وإصلاح المجتمع، ويحل أسلوب "حل المشكلات" بدلاً من التلقين. أهم خصائص تصميم المنهج البرجماتي هي "المرونة" والتجريب، وتنادي بمدخل يدور حول الطفل/المتعلم بدلاً من المادة الدراسية. دور المعلم البرجماتي: يوجه، ويساعد، وينصح المتعلمين، ويبني الموقف التعليمي حول مشكلات واقعية ذات أهمية حقيقية للطلاب لفهم بيئتهم الاجتماعية والطبيعية مع مراعاة ميولهم.</p>
+                    <p><strong>منهج النشاط والنقد:</strong> يُعد منهج النشاط أحد التنظيمات المنهجية الحديثة المنبثقة عنها، ويرجع أصله إلى ديوي الذي أنشأ أول مدرسة نشاط عام 1896م كمحاولة تعاونية بين الآباء والمعلمين والمهتمين بالتربية. يرى أحد فلاسفة التربية أن أفكار ديوي مناسبة لمنهج المدرسة الابتدائية، أما بالنسبة للمرحلة الثانوية فيجب أن يؤدي التعليم إلى مستوى عالٍ من التمكن من المحتويات التي لها صلة بالحياة لأنها تمثل الأدوات الضرورية للقوى الاجتماعية للشعوب.</p>
+                </div>
+
+                <h4>4. النظرية البوليتكنيكية أو التطبيقية (The Polytechnic Theory)</h4>
+                <div class="card">
+                    <p><strong>المفهوم والمنطلق الفكري والأهداف:</strong> تشير إلى عملية تحويل محتوى التربية إلى اتجاه "الفنون المتعددة"، وجوب النظر إلى كل جانب من جوانب المدرسة في ضوء علاقته بـ "الحياة الإنتاجية". وتتطلب تحقيق أقصى نمو ممكن لقدرة الفرد على تطبيق معرفته في موقف عملي واكتساب علاقات في نظام الإنتاج الاجتماعي. أهداف التربية وفق هذه النظرية: تزويد التلاميذ بالمعرفة في الفروع الرئيسية للإنتاج والمبادئ العملية التي تعتمد عليها. إكسابهم عادة التعامل مع آلات العمل والمساهمة في تنمية القدرات الفنية المنتجة. إكسابهم حب العمل اليدوي وتقديره، وإمدادهم بخلفية تقنية وفنية واسعة. إعطاء الشباب فرصة اختيار العمل المناسب والإبداع في نوعية الأعمال التي يتطلبها الإنتاج.</p>
+                    <p><strong>التطبيق والآليات والنموذج الصيني:</strong> انعكست هذه المفاهيم على تنظيمات المنهج لتحقيق الوحدة بين التعليم والعمل النافع اجتماعياً، ووجدت مكانها في النظام التعليمي السوفيتي؛ حيث جذبت اهتمام المربين السوفييت بعد الثورة البلشفية عام 1917م. أصبحت البوليتكنيكية مبدأ وموقفاً نظرياً يتخلل جميع المواد الدراسية ويوجه تدريسها (بما في ذلك العلوم الإنسانية، الطبيعية، والدراسات العملية). ولا تهدف فقط لإعطاء مهارات ومعلومات صناعية وزراعية، بل تهدف لغرس وتكوين عادات عقلية وخلقية تتعلق بعمليات الإنتاج. يتم تنظيم المواد الإجبارية والمقررات الاختيارية وأنواع النشاط الزائد لتحقيق الوحدة بين النواحي النظرية والعملية للإنسانيات وبين العلوم والتكنولوجيا. تُعتبر "الورش التعليمية" من أهم وأيسر الوسائل لتطبيقها في المدرسة، بشرط ارتباطها بالإنتاج الاقتصادي للمصانع والمزارع في المجتمع. تشمل الأنشطة المصاحبة: حلقات دراسية تكنولوجية، مراكز تكنولوجية للأطفال، قراءة كتب تكنولوجية، وزيارة المتاحف. يُطبق هذا الفكر في الأنظمة الاشتراكية المتبقية حتى الآن؛ ففي الصين يعتمد التعليم على الإنتاج وترتبط النظرية بالتطبيق، ولا يقتصر التعليم على المدرسة بل يتعداها للمصانع، المزارع، ووحدات الجيش. وتم تأسيس مصانع صغيرة في المدارس الأساسية والثانوية، ويُدعى العمال والفلاحون والجنود للتدريس فيها بناءً على جزء من الوقت (دوام جزئي).</p>
+                </div>
+
+                <h3>ثالثاً: نماذج المنهج المدرسي المنبثقة عن النظريات</h3>
+                <p>أنتج الفكر التنظيري عدة نماذج تخطيطية توضح كيفية بناء المنهج والعلاقة بين عناصره:</p>
+
+                <h4>1. نموذج تايلر (Tyler Model) - 1949م</h4>
+                <div class="card">
+                    <p><strong>مكانته وفكرته:</strong> يُعد تايلر رائد علماء المناهج، وطرح فكره النظري عام 1949م في كتابه الشهير "المبادئ الرئيسية للمناهج وطرق التدريس". يقوم على فكرة "التحليل خطوة بخطوة" لما يتضمنه تصميم المنهج، وذلك عبر أربعة أسئلة/مراحل رئيسة متتالية:</p>
+                    <ol>
+                        <li>صياغة واختيار الأهداف: ما الأهداف التي يجب أن تنجزها المدرسة؟</li>
+                        <li>اختيار الخبرات التعليمية: ما الخبرات التعليمية التي تساعد على تحقيق تلك الأهداف?</li>
+                        <li>تنظيم الخبرات التعليمية: كيف يمكن تنظيم تلك الخبرات المعرفية والتعليمية لتكون فعالة؟</li>
+                        <li>تقويم الخبرات: كيف يمكن تحديد مدى تحقق تلك الأهداف التربوية؟</li>
+                    </ol>
+                    <p><strong>مصادر الأهداف والتنظيم:</strong> حدد خمسة مصادر منبعاً لاختيار الأهداف هي: (المتعلمون، الحياة المعاصرة، المتخصصون في المواد الدراسية، علماء النفس، وعلماء فلسفة المجتمع). تتنوع الأهداف بتنوع مصادرها، ويقصد بالتنظيم في الخطوة الثالثة الموقف التعليمي المتكامل بما فيه من خبرات، وسائل، طرق، متعلم، معلم، والتفاعلات التي تحدث بينهم جميعاً.</p>
+                    <p><strong>عيوب ونقد نموذج تايلر:</strong> يمثل التقويم لديه مرحلة نهائية وختامية فقط (وليس تقويماً مستمراً في كل مرحلة)، وجاء في نهاية العملية للحكم بالإيجاب أو السلب فقط. وضع المتعلم على قائمة مصادر الأهداف، مما يعطي انطباعاً بأن المنهج يركز أساساً على المتعلم، وبذلك ينتمي النموذج في جوهره إلى النظرية البرجماتية للمنهج.</p>
+                </div>
+
+                <h4>2. نموذج مكدونالد (MacDonald Model)</h4>
+                <div class="card">
+                    <p><strong>فكرة النموذج:</strong> اشتمل هذا النموذج على أربعة أنظمة مدرسية رئيسية تتداخل فيما بينها لتشكل النظام الاجتماعي التعليمي:</p>
+                    <ul>
+                        <li><strong>نظام المنهج:</strong> يمثل نظاماً اجتماعياً يتألف من الأفراد الذين تظهر أنواع سلوكهم المختلفة في المنهج نفسه في نهاية المطاف، والمنهج عنده هو "عبارة عن خطة للعمل تؤدي إلى إتمام أو إكمال العملية التعليمية التعلمية".</li>
+                        <li><strong>نظام العملية التعلمية التعليمية:</strong> النظام الذي يتم من خلاله ظهور أنواع السلوك الرسمية أو الشكلية الخاصة بكل من التعليم والتعلم في آن واحد. ويعتقد مكدونالد أنه ما دام التعلم والتعليم يحدثان بصورة منفصلة فهما يمثلان "أنظمة شخصية"، أما عند جمعهما معاً فيتحقق "النظام الاجتماعي".</li>
+                        <li><strong>نظام التعليم:</strong> النظام التربوي الذي يعبر عن السلوك المهني المباشر للمعلم من أجل تسهيل أو تيسير عملية التعلم للتلاميذ.</li>
+                        <li><strong>نظام التعلم:</strong> يمثل النظام السلوكي الفعلي الذي يصبح فيه الطلبة مشاركين بفعالية في أنماط سلوك لها علاقة بواجباتهم المدرسية المختلفة.</li>
+                    </ul>
+                    <p><strong>التداخل الهندسي:</strong> يوضح النموذج الروابط المتعددة والمتداخلة بين الدوائر الأربعة عبر مناطق تقاطع مرقمة (من 5 إلى 10) تتوسطها بؤرة النظام الاجتماعي.</p>
+                </div>
+
+                <h4>3. نموذج تابا (Taba Model) - 1962م</h4>
+                <div class="card">
+                    <p><strong>خطوات التطوير السبعة:</strong> قامت هيلدا تابا بمراجعة نموذج تايلر وتطويره عام 1962م، ووضعت سبع خطوات رئيسية خطية لتطوير المنهج: (1. تحديد الحاجات، 2. صياغة الأهداف، 3. اختيار المحتوى، 4. تنظيم المحتوى، 5. اختيار خبرات التعلم، 6. تنظيم خبرات التعلم، 7. تحديد ما سيقوم به الطالب وكيفية تقويمه).</p>
+                    <p><strong>المعايير والنقد:</strong> وضعت تابا معايير دقيقة لكل خطوة؛ فمثلاً عند اختيار الخبرات التعليمية يجب مراعاة: صدق المحتوى واهميته، التناسق مع واقع المجتمع، التوازن في اتساع الخبرات وعمقها، مراجعة مدى شمول الأهداف، تطويع خبرات الحياة لتناسب الطالب ويسهل تعلمها، وملائمة الخبرات لحاجات المتعلمين وميولهم واهتماماتهم. قصدت إبراز العلاقة الطردية الوثيقة بين الحاجات ونواحي السلوك المراد تغييرها من ناحية، والأهداف الموضوعة من ناحية أخرى، باعتبارها المصدر الأساسي لتحديد الأهداف. <strong>النقد:</strong> النموذج ذو اتجاه خطي واحد (من اليمين إلى اليسار) وليس دائرياً؛ أي لم تكتمل دائرة التفاعل بين المكونات، مما يعني أن التقويم ليس مواكباً لكل خطوة بل هو تقويم نهائي ختامي.</p>
+                </div>
+
+                <h4>4. نموذج ويلر (Wheeler Model)</h4>
+                <div class="card">
+                    <p><strong>المنحنى الدائري خماسي المراحل:</strong> نظر ويلر إلى تخطيط المنهج على أنه "عملية دائرية مستمرة"، مستبعداً فكرة الاتصال الأفقي أو الخطي الجامد بين مراحل التخطيط. ويتكون نموذجه من خمس مراحل متصلة في حلقة دائرية تضمن التجدد والتطور المستمر:</p>
+                    <ol>
+                        <li><strong>المرحلة الأولى:</strong> تحديد الأهداف وتقسيمها إلى ثلاثة أنواع متدرجة: الغايات (أهداف بعيدة المدى تُحقق عبر مرحلة دراسية كاملة)، الأهداف العامة (أقل عمومية وتتحقق عبر مادة معينة)، والأهداف الخاصة (إجرائية سلوكية تتعلق بموقف تعليمي أو حصة دراسية). وبذلك لم تعد الأهداف غامضة بل عملية محددة.</li>
+                        <li><strong>المرحلة الثانية:</strong> اختيار الخبرات التعلمية المناسبة.</li>
+                        <li><strong>المرحلة الثالثة:</strong> اختيار المحتوى بناءً على الجانب المعرفي المشتق من مجموعة الخبرات المراد إكسابها للتلاميذ.</li>
+                        <li><strong>المرحلة الرابعة:</strong> تنظيم الخبرات التعلمية وتكاملها.</li>
+                        <li><strong>المرحلة الخامسة:</strong> التقويم، ويأتي متصلاً مباشرة بالخطوة الأولى (الأهداف والغايات) ليوفر التغذية الراجعة، وإن كان يعاب عليه عدم تحديد موقع إحصائي محدد للتغذية الراجعة مع مكونات المنهج.</li>
+                    </ol>
+                    <p><strong>التميز:</strong> يُعد نموذج ويلر أكثر تطوراً من نموذجي تايلر وتابا بفضل طبيعته الدائرية التفاعلية.</p>
+                </div>
+
+                <h4>5. نموذج المنهج كنظام عند بوشامب (Beauchamp System Model)</h4>
+                <div class="card">
+                    <p><strong>المنطلق الفكري والأبعاد الثلاثة:</strong> ينطلق بوشامب من فهم واسع وعميق؛ فالمنهج عنده لا يعني مجرد محتوى دراسي أو خبرات مخططة أو مخرجات، بل هو "منظومة تفاعلية شاملة" تشتمل على تنظيم من المتخصصين والإجراءات المتعلقة بالتصميم والتنفيذ والتقويم، وينقسم إلى:</p>
+                    <ul>
+                        <li><strong>(1) المدخلات (بيانات المدخلات):</strong> تشمل الفكر التربوي، خصائص المجتمع، الأشخاص المشتركون، المواد الدراسية المشتقة من الأنظمة المعرفية والمواد الأخرى، القيم الثقافية والاجتماعية، وحاجات التلاميذ وميولهم وقدراتهم.</li>
+                        <li><strong>(2) العمليات:</strong> تشمل إجراءات العمل الخاصة بتحديد أهداف المنهج وتخطيطه وتصميمه وكتابته، تحديد إجراءات الإنجاز أو التنفيذ بالنسبة للمنهج، وتحديد إجراءات تقييم ومراجعة المنهج.</li>
+                        <li><strong>(3) المخرجات:</strong> يتمثل الناتج الرئيس لنظام المنهج في الوصول إلى منهج مخطط له مسبقاً كمنتج ملموس واضح.</li>
+                    </ul>
+                </div>
+
+                <h4>6. نموذج زايس (Zais Model)</h4>
+                <div class="card">
+                    <p><strong>العناصر الأربعة والتميز الهيكلي:</strong> ركّز زايس على تنظيم العناصر الأربعة الأساسية للمنهج وعرضها في شكل هندسي مترابط يتأثر ويؤثر ببعضه البعض بشكل تبادلي، وهذه العناصر هي: (1. الغايات والأهداف العامة والأهداف الخاصة، 2. المحتوى، 3. الأنشطة التعليمية، 4. التقويم).</p>
+                    <p><strong>أوجه التميز والأفضلية عن نموذج تايلر:</strong> بالرغم من تأثر زايس بأفكار تايلر، إلا أنه يمتاز عنه بثلاث نقاط أساسية:
+                        <ul>
+                            <li><strong>التركيز على العلاقات المتبادلة:</strong> تظهر في نموذجه أسهم تبادلية في جميع الاتجاهات بين العناصر الأربعة لأنها تتأثر وتؤثر ببعضها.</li>
+                            <li><strong>التغذية الراجعة المستمرة:</strong> ركّز على العلاقة المتميزة والتفاعلية المباشرة بين التقويم والأهداف من جهة، والتغذية الراجعة من جهة ثانية.</li>
+                            <li><strong>إبراز عنصر المحتوى:</strong> أعطى اهتماماً كبيراً ومستقلاً لعنصر "المحتوى المعرفي"، والذي لم يظهر بصورة واضحة ومستقلة في نموذج تايلر نظراً لتركيز تايلر على الأنشطة أو الخبرات التعلمية في اثنين من أسئلته الأربعة الشهيرة.</li>
+                        </ul>
+                    </p>
+                </div>
+            </section>
+
+            <!-- CHAPTER 5 -->
+            <section id="chap5" class="content-section">
+                <h2>الفصل الخامس: تنظيمات المنهج المدرسي المعاصر</h2>
+                
+                <div class="mindmap-container">
+                    <div class="mindmap-title">🌳 خريطة ذهنية تفاعلية: تنظيمات المناهج المعاصرة والتقليدية</div>
+                    <ul class="tree">
+                        <li>
+                            <span class="node root">تنظيمات المنهج</span>
+                            <ul>
+                                <li>
+                                    <span class="node branch">التنظيمات التقنية والحديثة</span>
+                                    <ul>
+                                        <li><span class="node">المنهج التكنولوجي: أسلوب الخطو الذاتي، تفريد التعليم، المعلم مهندس معلومات، بنوك أسئلة واختبارات إلكترونية</span></li>
+                                        <li><span class="node">المنهج الحلزوني: نظرية برونر، تقديم المادة مكررة متدرجة التعقيد (مفهوم التأكسد والتعاون)</span></li>
+                                        <li><span class="node">المنهج الخفي الكامن: موازي غير رسمي، قيم وخبرات يتعلمها الطالب خارج الإشراف، التحصيل الدراسي الثاني</span></li>
+                                        <li><span class="node">المنهج العالمي: مقومات الفكر الإنساني المشترك، قضايا عالمية، مهارات اجتماعية وعمل جماعي طويل</span></li>
+                                        <li><span class="node">المنهج البيئي: يعتمد على مشكلات البيئة المحلية فالعالمية، تجربة في الهواء الطلق، ملفات التقويم (البورتفليو)</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span class="node branch">التنظيمات التقليدية والمعدلة</span>
+                                    <ul>
+                                        <li><span class="node">مواد منفصلة: أقدم الأنواع، التركيز على الكتاب والمادة، حواجز فاصلة بين المواد والنوع الواحد، حفظ وتلقين</span></li>
+                                        <li><span class="node">مواد متصلة مترابطة: معالجة الانفصال، ربط عرضي (حسب الظروف للمعلم) أو ربط منظم مخطط (عضو ارتباط)</span></li>
+                                        <li><span class="node">المجالات الواسعة: ضم المواد الوثيقة في ميدان واحد (اجتماعيات)، تقليل العدد شكلياً، دراسة مشكلات المجتمع</span></li>
+                                        <li><span class="node">المنهج المندمج: إزالة تامة للحواجز ومزج تام (مقررات اتساعاً)، يصلح فقط لرياض الأطفال والابتدائية الأولى</span></li>
+                                        <li><span class="node">المنهج المتكامل: تكامل طبيعي للمواد لتلبية نمو الجسم والعقل، موازنة بين حاجات الفرد والمجتمع</span></li>
+                                        <li><span class="node">مناهج النشاط والمشروع: محورها ميول وحاجات الطالب، المعلم موجه فقط، ربط تام بالبيئة، تفتقر للتنظيم المنطقي</span></li>
+                                        <li><span class="node">المنهج المحوري: تنظيم خبرات عامة لجميع الطلاب تشتق من المشكلات الاجتماعية، تخطيط مشترك، إرشاد وتوجيه</span></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <h3>أولاً: مقدمة والأساس التكنولوجي للمنهج</h3>
+                <div class="card">
+                    <p>ساهمت التقنية الحديثة بتوفير وسائل وأدوات تهدف إلى تطوير أساليب التعليم والتعلم، وتشجيع استخدام طرائق تربوية مبتكرة ومتجددة توفر مناخاً فعالاً يُمكّن المدرس من تحسين التحكم بنواتج التعلم. ويواجه التعليم تحديات لتلبية احتياجات التنمية الشاملة وتخريج متعلمين قادرين على معرفة أنفسهم والآخرين ومواجهة متطلبات العصر والعيش في "القرية العالمية" دون الانفصال عن جذورهم أو التمزق بين العولمة والانتماء. ويتطلب ذلك بناء مناهج حديثة تتماشى مع العصر وتُكسب مهارات التعلم الذاتي مدى الحياة.</p>
+                    <p><strong>ظهور الأساس التكنولوجي ومفهومه:</strong> قبل عصر تكنولوجيا المعلومات، كانت أسس بناء المناهج مقصورة على الأسس (الفلسفية، الاجتماعية، الثقافية، المعرفية، والنفسية). إلا أن التقدم التكنولوجي الهائل فرض إضافة أسس جديدة لتصميم المناهج وهو "الأساس التكنولوجي". ويقصد به مراعاة الأسس التكنولوجية من حيث تصميم العناصر المكونة للمنهاج في ضوء تكنولوجيا التعليم وتنظيمه بصورة منهجية، وإدخال الروح التكنولوجية واختيار أهداف المنهاج، ومضامينه المعرفية، وخبراته، وإدخال التكنولوجيا في عمليات تدريس المادة وتقويم المناهج بكل أبعادها. وبمعنى أآخر، هو إدخال التكنولوجيا في "منظومة المنهاج التربوي" (الأهداف، المحتوى، طرائق التدريس، والتقويم) لتندمج العناصر معاً وتشكل كياناً تعليمياً أفضل وأفعل.</p>
+                    
+                    <h4>1. مفهوم التكنولوجيا (Technology) لغةً واصطلاحاً:</h4>
+                    <ul>
+                        <li><strong>الأصل اللغوي:</strong> كلمة إغريقية قديمة مشتقة من كلمتين هما (Techne) بمعنى مهارة، و(Logos) ومعناها دراسة. وتعني تقنية إذن "تنظيم المهارة الفنية بحيث تصبح وظيفتها أكثر وضوحاً"، وقد دخلت هذه الكلمة إلى اللغة الإنجليزية في بداية القرن التاسع عشر.</li>
+                        <li><strong>تعريف جلبرث:</strong> هي "التطبيق النظامي للمعرفة العملية، أو معرفة منظمة من أجل أغراض عملية".</li>
+                        <li><strong>تعريف محمد عطية خميس:</strong> هي "العلم الذي يعنى بعملية التطبيق المنهجي للبحوث والنظريات وتوظيف عناصر بشرية وغير بشرية في مجال معين، لمعالجة مشكلاته، وتصميم الحلول العلمية المناسبة لها، وتطويرها واستخدامها، وإدارتها وتقويمها لتحقيق أهداف محددة".</li>
+                        <li><strong>رأي ماهر إسماعيل صبري:</strong> يعتقد أن التكنولوجيا ليست مجرد علم أو تطبيق العلم أو مجرد أجهزة، بل هي أعم وأشمل من ذلك بكثير، فهي "نشاط إنساني يشمل الجانب العلمي والجانب التطبيقي" معاً.</li>
+                    </ul>
+                </div>
+
+                <h3>ثانياً: المنهج التكنولوجي (The Technological Curriculum)</h3>
+                <div class="card">
+                    <h4>1. نشأة المنهج التكنولوجي ومفهومه:</h4>
+                    <p><strong>النشأة:</strong> يعود مفهومه -بوصفه منظومة تكنولوجية- إلى العقود الأولى من القرن العشرين، حينما بذل التربويون جهوداً لتطبيق المفاهيم الصناعية وأساليب الإدارة العلمية في كثير من المجالات التربوية، وكان المنهج المدرسي من أسبق المجالات تأثراً بها. وأشار يوسف (1429هـ) إلى أن المنهج التكنولوجي قد يكون تكنولوجي المحتوى، أو تكنولوجي الأسلوب والتنفيذ، أو هما معاً.</p>
+                    <p><strong>تعريف وليم عبيد ورفيقه (1999م):</strong> هو "مفهوم علمي تربوي يعبر عن منظومة إنتاجية تسعى بصورة مستمرة إلى تطبيق الأساليب التكنولوجية في عمليات التعليم والتعلم، وإلى تطويع الأجهزة والمعدات ذات القدرات الفائقة في تخزين المعارف والمعلومات واستدعائها وعرضها للمتعلمين، من خلال البرامج ذات الأهداف مسبقة التحديد، واستخدم خطوات تتابعية مبنية على علم النفس السلوكي".</p>
+                    <p><strong>تعريف إبراهيم والكلزة:</strong> هو "منهج منظم ومخطط يبنى بأسلوب علمي يتم تجربته وتعديله إلى أن يصل إلى الصورة الناجحة الفاعلة عن طريق التحليل العلمي للنتائج".</p>
+                    <p><strong>تعريف جودت أحمد سعادة ورفيقه (2001م):</strong> هو "مجموعة من الخبرات التعليمية التي يستعان في تخطيطها، وتصميمها، وتنفيذها، وتقويم أثرها، بتقنيات التعليم من أجل تحقيق أهداف محددة". وفي ظل هذا التعريف لا يتم النظر للتكنولوجيا كأجهزة ومعدات فقط، بل تتناول بشكل نظامي جميع عناصر العملية (معلم، متعلم، محتوى، طرق تفاعل، تقويم، وتطوير)، مما يعكس العلاقة التفاعلية بين الجانب البشري والنظري والبرامج.</p>
+                    <p><strong>ملحوظة نقدية مبكرة:</strong> أضاف إبراهيم والكلزة أنه في هذا المنهج "يندر التعامل مع الأهداف الملائمة للظروف الاجتماعية ولا تتاح الفرصة للتلاميذ لوضع أهدافهم الخاصة"، فهو بمثابة قالب من قوالب إخراج المواد المنفصلة في صورة تكنولوجية يغلب عليها الطابع الحديث.</p>
+
+                    <h4>2. اتجاهات تطبيق التكنولوجيا في مجال المنهج:</h4>
+                    <ul>
+                        <li><strong>الاتجاه الأول (كخطة للاستعمال المنظم للوسائل):</strong> تُستخدم كخطة للاستعمال المنظم بالنسبة للوسائل والأدوات والمواد التعليمية لتحقيق تتابع مبتكر يراعي شروط التعليم التي أوضحتها المدارس السلوكية في علم النفس، ويظهر ذلك في أنماط التعليم بالحاسب والبرمجيات، وفي مداخل النظم التي تستخدم الأهداف السلوكية، والمواد المبرمجة، والاختبارات المنظمة مرجعية المحك للوقوف على مدى نجاح المتعلم في إنجاز الأهداف.</li>
+                        <li><strong>الاتجاه الثاني (من خلال النماذج والإجراءات النظامية):</strong> تظهر التكنولوجيا من خلال النماذج والإجراءات التي تستخدم في بناء وتقويم وتطوير المنهج من جهة، والنظم التعليمية من جهة أخرى؛ حيث يتم الاستفادة من التكنولوجيا الملائمة في تحديد أهداف المنهج، وترتيب المواقف التعليمية، والوقوف على مدى استفادة المتعلمين في ضوء الاختبارات المدارة بالتكنولوجيا من جمع وتحليل البيانات وتبويبها وتقديم التوصيات لتطوير المنهج.</li>
+                    </ul>
+
+                    <h4>3. أسس ومبادئ المنهج التكنولوجي:</h4>
+                    <ol>
+                        <li>يهتم المنهج التكنولوجي بالنتاجات التعليمية المخطط لها مسبقاً، والتي تتمثل في قوائم السلوكيات أو الأهداف النهائية.</li>
+                        <li>يعرف المتعلم بوضوح السلوكيات أو الأهداف النهائية التي يتعين عليه تحقيقها في نهاية فترة التعلم.</li>
+                        <li>يتدرب المتعلم منفرداً -في معظم الأحيان- على المهارات المتطلبة مسبقاً، في نهاية فترة التعلم.</li>
+                        <li>يتدرب المتعلم على الهدف الجديد عن طريق وسيط تعليمي (مادة تعليمية)، تقدم من خلال وسيط تكنولوجي.</li>
+                        <li>يتم التعلم بالتشجيع المتتابع للمحاولات الناجحة للمتعلم، في ضوء التغذية الراجعة الفورية، والتقويم البنائي المصاحب بالرجوع إلى مصادر معرفة فرعية شارحة وموجهة للمتعلم إذا أخطأ أو احتاج لمعرفة إضافية.</li>
+                        <li>لا ينتقل المتعلم من هدف إلى آخر إلا بعد وصوله إلى مستوى إتقان محدد مسبقاً.</li>
+                        <li>الأصل في التعليم أن ينجح المتعلم ويصل إلى مستوى الإتقان المطلوب، والاستثناء أن يفشل في ذلك؛ فإذا فشل المتعلم فإن ذلك لا يرجع إلى ضعفه هو وإنما إلى ضعف البرنامج المقدم إليه، أو ضعف إدارة العملية ذاتها.</li>
+                    </ol>
+
+                    <h4>4. عناصر ومكونات المنهج التكنولوجي:</h4>
+                    <ul>
+                        <li><strong>الجانب البشري:</strong> العملية قائمة على وجود المعلم، المتعلم، ووجود اتصال فعال بينهما (فعالية التلاميذ ومعلميهم).</li>
+                        <li><strong>الجانب النظري:</strong> يركز على نظريات التعليم والتعلم الحديثة (مبدأ الفروق الفردية، مبدأ التعلم حتى التمكن، ومراعاة الأسس المختلفة وخاصة الأساس التكنولوجي). والمحتوى مشتق في الأصل من المواد الدراسية، مما يعني أن عملية إدارة المنهج يجب أن يقوم بها فريق من الخبراء من بينهم خبير التكنولوجيا الذي يعد شخصية هامة في لجان تطوير المناهج وله دور في اتخاذ القرارات.</li>
+                        <li><strong>الأهداف والمحتوى والاستراتيجيات والأنشطة والخبرات وأساليب التقويم:</strong> يخاطب المنهج جميع الطلاب كل حسب مستوى تحصيله وقدراته واستعداداته، وذلك بـ "تفريد" جميع عناصر المنهج باستخدام الحاسب والبرمجيات عالية الجودة.</li>
+                        <li><strong>الأجهزة والمعدات التعليمية:</strong> هي أدوات تكنولوجيا التعليم، وهي معاونة ومكملة لأدوار المعلم وليست بديلة عنه، ومنها: الحاسب الآلي، أجهزة الإسقاط الضوئي، السبورة الإلكترونية، التليفزيون، والفيديو التعليمي.</li>
+                    </ul>
+
+                    <h4>5. انعكاسات المنهج التكنولوجي على عناصر المنهج المدرسي:</h4>
+                    <ul>
+                        <li><strong>أولاً: الأهداف:</strong> يتم اختيار الأهداف التربوية في ضوء النظامية، وفي ضوء المتعلم ذاته وقدرته على التعلم الذاتي واحتياجاته، والإعلاء من الخصائص الفردية من حيث ال خلفية المعرفية والمفاهيمية. ويركز على المتعلم أولاً، ومستوى الحضارة القائمة في المجتمع ثانياً، لبناء شبكة متبادلة وعلاقات بينية بين (الأهداف، المحتوى، وأساليب التقويم)، بهدف توفير بيئة تتلاءم مع المتعلم وقدراته، وتحقيق تعلم أجود، وجعل التلاميذ قادرين على استخدام مبادئ التعلم الذاتي، وكيف يستمرون في التعلم بصورة دائمة للتكيف مع متطلبات سوق العمل المتجددة والتوازن الثقافي.</li>
+                        <li><strong>ثانياً: المعلم:</strong> حتى وقت قريب كان المعلم هو مصدر المعرفة الأساسي بجانب الكتاب المدرسي. ومع تنوع المصادر، انحصر دور المعلم المعرفي شيئاً فشيئاً بتأثير التوسع في استخدام الحاسب وشبكة الإنترنت والتكنولوجيا المتقدمة. أصبح المعلم في ظل هذا المنهج "ميسراً للعملية التعليمية وليس ملقناً للمعلومات"، حيث يقدم الإرشادات ويتيح للمتعلمين اكتشاف مواد التعلم بأنفسهم. المعلم هو العامل الرئيسي في جودة التعليم، ويجب أن يتغير دوره فبدلاً من التلقين يقوم بـ "تصميم الموقف التعليمي"، ليصبح دوره شبيهاً بدور "مهندس المعلومات" أو "مهندس المعرفة".</li>
+                        <li><strong>ثالثاً: المتعلم:</strong> يوصف موقف المتعلم بأنه موقف نشط وفعال لا سلبي؛ لأنه يتضمن مشاركته الفعالة في عملية التعليم وليس مجرد متلقٍ. ومن هنا جاءت عملية "تفريد التعليم"، حيث المتعلم الذي يتلقى البرنامج التعليمي عبر الحاسوب هو محور العملية التعليمية، والتعليم في ظل التكنولوجيا يراعي الفروق الفردية بحيث يسير المتعلم تبعا لما لديه من إمكانيات وقدرات خاصة.</li>
+                        <li><strong>رابعاً: المحتوى:</strong> تسهم تكنولوجيا المعلومات في حل مسألة الانعزال بين الحقول المعرفية التي كانت تفرض حالة من التتابع والتنظيم الخطي للمناهج (مثل ترتيب: اللغة أولاً ثم الحساب، الجبر، الهندسة الخطية، المساحة، ثم الهندسة الفراغية). عمل عصر المعلوماتية على إمكانية تحقيق التكامل المعرفي من خلال تنظيم المحتوى المعرفي للمنهاج في إطار من "التنظيم الحلزوني" الذي يُمكن الطالب من التقدم في المادة المعرفية في أي مرحلة من العمر مع استمرار حالة التعمق المعرفي عن طريق إتاحة فرص من التكرار والمراجعة لما تم تدريسه سابقاً. كما يتسم بتفتيت النصوص والمعارف وجمعها في وحدات معرفية أصغر وإدخلها في تشكيلات منوعة لتحقيق أهداف تعليمية واحتياجات المتعلم، وخفف من أساليب حشد المسائل السابقة وأكد أهمية التجديد السريع.</li>
+                        <li><strong>خامساً: وسائل وطرق التدريس:</strong> أدى التطور التقني إلى ظهور طرق متعددة للتدريس تشمل: (أ- طريقة حل المشكلات: تقوم على أساس نشاط التلميذ بشكل كلي، ب- طريقة الإلقاء: تقوم على أساس نشاط المعلم إلى حد كبير، ج- طريقة الحوار والمناقشة: تتطلب نشاطاً كبيراً من المعلم والتلميذ، د- طرق التدريس الفردي: كالتعليم المبرمج أو التعليم بالحاسبات الآلية).
+                            <p><strong>مفهوم تكنولوجيا الوسائط المتعددة (Multimedia):</strong> من أكثر المفاهيم ارتباطاً بحياتنا الحالية والمستقبلية؛ حيث أصبح بالإمكان إحداث التكامل بين مجموعة من أشكال الوسائل تفاعلياً عن طريق الكمبيوتر في بيئات التعليم. وأدى إحداث التزاوج بين الفيديو والكمبيوتر إلى طفرة هائلة في تصميم وإنتاج البرامج. وتشير برامج الوسائط المتعددة إلى برامج تمزج بين (الكتابات، الصور الثابتة والمتحركة، التسجيلات الصوتية، والرسومات الخطية) لعرض الرسالة، وهي تعمل على إثارة العيون والآذان وأطراف الأصابع والعقول، ويستطيع المتعلم التفاعل معها مستعيناً بالحاسوب.</p>
+                        </li>
+                        <li><strong>سادساً: التقويم:</strong> التقويم التربوي هو أحد فروع علم النفس التربوي. التقويم حديثاً أصبح يشكل أحد عناصر المنهج بالمفهوم الحديث، وغايته أشمل وأوسع من البعد المعرفي فقط، وله أدوات قياس مختلفة ومتنوعة نظراً لاختلاف غايتها؛ حيث يتجه إلى النظر لكل متعلم على أنه "نموذج من ذاته وحالة منفردة"، وهذا ينسجم مع مبدأ تفريد التعليم.
+                            <p><strong>التوجيهات الحديثة في التقويم التربوي تشمل:</strong></p>
+                            <ul>
+                                <li><strong>بنوك الأسئلة:</strong> يقصد بها "مكان آمن توضع فيه مجموعات متنوعة من الأسئلة ذات مستويات مختلفة ويسهل عن طريقه سحب أو إضافة مجموعة أو عدد من الأسئلة المقننة".</li>
+                                <li><strong>الاختبارات الإلكترونية:</strong> هي "العملية التعليمية المستمرة والمنتظمة التي تهدف إلى تقييم أداء الطالب من بعد باستخدام الشبكات الإلكترونية".</li>
+                                <li><strong>خصائص الاختبارات الإلكترونية:</strong> (أ- التفاعلية، ب- تعدد الوسائل واتساعها، ج- استخدام الشبكات، د- المرونة وتوفير الوقت، هـ- الحد من وقت التغذية الراجعة، و- الاحتفاظ بالسجلات).</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h4>6. أسس تطوير المنهج التكنولوجي:</h4>
+                    <p>يهتم المنهج التكنولوجي عند تطويره بتطبيق معيارين حديثين: (أ- ضرورة مراجعة إجراءات تطوير المنهج وتحقيق صدقها من خلال عرضها على متخصصين في مجال تطوير المناهج، ب- ضرورة أن يقوم المنهج المطور وفق نماذج معينة، ونتائج مماثلة عند إعادة تطبيقه لتحقيق مزيد من ثبات عملية التطوير). ويتم تطوير المنهج التكنولوجي بطريقة منظمة تمر بخمس خطوات مرتبة:</p>
+                    <ul>
+                        <li><strong>الصياغة الجديدة:</strong> تعتمد على قرار يؤكد الحاجة إلى عملية التطوير، وتكون تلك الحاجة مبنية على افتراض مسبق، أو معتمدة على قرار رسمي من جهة مسؤولة أو مختصة.</li>
+                        <li><strong>تحديد مواصفات النواتج التعليمية:</strong> تفيد في توجيه تطوير البرنامج وتقديم أساس لتقويمه، وتخطيط عملية التقويم وتحديد مواصفات المثير الذي يستجيب له المتعلم، وتحديد معايير الحكم على مفهوم الكفاية في الاستجابة. كما يشمل التوصيف تحديد المهارات التي يتكون منها البرنامج واللازمة لإنجاز الأهداف بشكل منظم، وتحديد خصائص الطلاب، وتحديد طريقة تعلم البرنامج (ذاتية أو غير ذاتية).</li>
+                        <li><strong>النموذج الأولي:</strong> يتم عمل تنوعات في المواقف التعليمية المتتابعة، ثم يتم تجربتها على عدد قليل من المتعلمين، واتخاذ قرارات تتعلق بالأشكال التي يتضمنها البرنامج ووسائط التعلم وتنظيم عملية التعلم.</li>
+                        <li><strong>التجريب المبدئي:</strong> تتضمن عملية تجريب وحدات تعليمية على عينة من المتعلمين لتحديد ما إذا كانت مكونات البرنامج صالحة لإنجاز أهدافها، والكشف عن أوجه القصور، وتمثل البيانات التي يتم الحصول عليها هنا (من نتائج الاختبارات وأخطاء عملية التجريب) جانباً هاماً في المجتمع التكنولوجي.</li>
+                        <li><strong>تنفيذ البرنامج:</strong> يتم تنفيذه في المدارس بعد تجريبه وتتم الاستفادة من البيانات التي تُجمع من هذه الخطوة سواء في التدريب أو النتائج، أو ما يتعلق ببعض مشكلات التنفيذ مثل الحاجة إلى تدريب المعلم، أو بعض التأثيرات الجانبية لعناصر غير مشتركة في عملية التنفيذ.</li>
+                    </ul>
+
+                    <h4>7. مميزات وعيوب المنهج التكنولوجي:</h4>
+                    <p><strong>المميزات (الإيجابيات):</strong></p>
+                    <ul>
+                        <li>يعتمد أسلوب الخطو الذاتي (Self-Pacing) الذي يتيح للمتعلم الوقت الكافي للسير في تعلمه وفقاً لسرعته وقدراته الذاتية لتحقيق مستوى الإتقان، مراعاةً لمبدأ الفروق الفردية.</li>
+                        <li>يوفر للمتعلم التغذية الراجعة من خلال التقويم المستمر لأدائه، مما يسهم في تعديل مسار التعلم وتلافي الخطأ أولاً بأول حتى لا يتعمق في سلوكه.</li>
+                        <li>يركز على نتائج التعلم والأهداف أكثر من تركيزه على الوسائل والعمليات الوسيطة، مما يؤدي لاهتمام المصممين بأكثر أنواع الأهداف قيمة للتركيز عليها وملاحظتها وقياسها.</li>
+                        <li>يوظف تقنيات التعليم بكل ما تحمله من مثيرات لفظية وحركية وصوتية عند عرض المادة، مما يضفي حيوية تجذب انتباه المتعلم وتثير فضوله وتوجد لديه متعة وتشويقاً وتركيزاً، مما يزيد الاستيعاب ويقلل التشتت والنسيان وضعت الحماس.</li>
+                        <li>يهتم بتجريب المادة الدراسية على عينة ممثلة لمجتمع المتعلمين وتعديلها والتأكد من صلاحيتها قبل تعميمها، مما يجعلها أكثر كفاءة وقدرة على التعامل مع الواقع.</li>
+                        <li>يُكسب المتعلمين مهارات التعامل مع التكنولوجيا الحديثة (استخدام الحاسب، البرامج التعليمية، والكتب الإلكترونية).</li>
+                        <li>يتيح قدراً كبيراً من المرونة والحيوية واختصار الوقت لاعتماده على التقنيات الحديثة في الحصول على المادة وعرضها في أي وقت ومكان عبر شبكات التعليم عن بعد والإنترنت.</li>
+                    </ul>
+                    <p><strong>العيوب (السلبيات):</strong></p>
+                    <ul>
+                        <li>لم ينجح -بدرجة كافية- في تحديد المهارات اللازمة لتعلم برنامج معين، أو إيجاد ترتيب هرمي لتعلم المواد الدراسية المعقدة.</li>
+                        <li>لا توجد قواعد علمية لتحديد مستويات الإتقان المطلوبة للمواد الدراسية؛ إذ يعتمد على الأساليب الإحصائية والسيكولوجية وهذا غير مرضٍ ولا مقنع.</li>
+                        <li>يندر أن يسمح للمتعلمين باشتقاق الأهداف والمشاركة في وضعها، لأنها تقدم إليهم جاهزة في البرامج دون أن تكون معبرة عن حاجاتهم الفعلية.</li>
+                        <li>يؤمن بأن كل متعلم قابل للتعلم وقادر على الوصول لمستوى الإتقان، غير أن هذه النظرة تبدو متفائلة جداً لا يؤيدها الواقع التربوي.</li>
+                        <li>لم يقدم إسهامات حقيقية في مساعدة المتعلمين على نقل أثر ما يتعلمونه في مادة دراسية إلى مادة أخرى، ولا إلى مواقف الحياة المختلفة.</li>
+                        <li>يسهم في جعل المتعلم الذي يتعلم منفرداً يعيش في عالم منعزل عن العالم الحقيقي وعن التفاعل الاجتماعي الذي يبني شخصية المتعلم بناءً متوازناً.</li>
+                        <li>يحتاج إلى تجهيزات عالية التكلفة والصيانة والتجديد بصورة تستلزم تعدد جهات التمويل، وهذا يشكل عبئاً اقتصادياً كبيراً على الدول النامية ذات الإمكانات المادية المحدودة.</li>
+                    </ul>
+
+                    <h4>8. مقارنة بين الاتجاه التقليدي والاتجاه التكنولوجي في المنهج:</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>المنهج التكنولوجي</th>
+                                <th>المنهج التقليدي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>يعتمد على التجريب للمواد الدراسية للاطمئنان على مصداقيتها.</td><td>يعتمد على شهرة المؤلفين وسمعتهم.</td></tr>
+                            <tr><td>يهتم بما إذا كانت المعلومة متاحة بالنسبة لعدد الطلاب ومقدار الوقت الذي أمضاه المتعلمون في تعلم أجزاء المحتوى ونتائج قدرات المتعلمين المختلفة.</td><td>يعتمد على أسس تربوية شائعة ومدى إسهام المحتوى في توسيع نظرة المتعلمين تجاه العالم.</td></tr>
+                            <tr><td>الوقوف على مدى تحديد البرامج التعليمية لخصائص المتعلمين.</td><td>يهتم بترتيب المواد التعليمية بما يناسب المرحلة التعليمية.</td></tr>
+                            <tr><td>يهتم بمراجعة المادة التعليمية وتنقيحها في ضوء التجارب.</td><td>يهتم بالكتاب المدرسي وطباعته وحجمه.</td></tr>
+                            <tr><td>يركز على كيفية التعليم والمهارة والإنجاز.</td><td>يراعي شروطاً شكلية كالورق وغلاف الكتاب.</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h4>9. وجهة نظر الباحثين ونقد المنهج التكنولوجي الميداني:</h4>
+                    <p>تسعى وزارات التربية والتعليم إلى التطوير بشتى صوره، ولكن وللأسف لا زالت الدائرة تدور حول المعرفة والمحتوى والمخرجات الورقية. أما بالنسبة للمنهج التكنولوجي كمنظومة شاملة لجميع العناصر فلا زال شبه معدوم على أرض الواقع إلا ما تم اعتماده تحت مسمى "بوابة للتعليم الإلكتروني"، وهي لا تتناسب مع مدارسنا الحالية سواء من حيث الجداول اليومية، أو التجهيزات المدرسية، أو الخبراء والمدربين المؤهلين بوجه عام.</p>
+                    <p>المنهج التكنولوجي يركز على المتعلم، ويحتاج لبيئة خاصة به، ويرتكز على أهداف معينة معرفية متعلقة بسلوك معين. ويهتم بالبعد المعرفي فقط، أما بعد المهارات فهو منحصر في مهارات الآلة وصيانتها وتصميمها. بقيت منظومات التعليم الإلكتروني في مرحلة الحضانة ولم ترتقِ لمستوى التفعيل الحقيقي والتطبيق العملي لعدم وجود إطار عمل وآلية تنفيذ تراعي واقع الميدان التربوي، مع تسارع أدوات التكنولوجيا. يصعب على التربويين بناء منهج متكامل في جانب من جوانب المعرفة يعتمد كلياً على المنهج التكنولوجي، وإنما يعد مدخلاً أو أساساً فعالاً ينفرد عن المناهج الأخرى.</p>
+                    <p>يركز المدخل التكنولوجي على سؤال واحد فقط: كيف نُعَلِّمُ؟ أي كيف نجعل التعليم فعالاً في تحقيق الأهداف. ويضحي باهتمامات التلاميذ وميولهم وحاجاتها الخاصة لحساب الاحتياجات التي تحددها المؤسسات الصناعية والتجارية، أي يعمل على صب المتعلمين ضمن قوالب محددة في المصانع متجاهلاً المشاعر والميول الشخصية. كما أنه لا يهتم بالقضايا والمشكلات التي تواجه مصير الفرد والمجتمع والعالم، وإنما يرتبط عادة بالمواد الدراسية المنفصلة.</p>
+                    <p>يرفض المنهج التكنولوجي المركزية تماماً وقائم على النظام غير المركزي في تصميم البرامج وتنفيذها وتطوير عناصر المنهج ومكوناته. ويسهم في توفير البيانات الدقيقة عن مدى تحقيق أهداف المنهج المعرفية فقط (بدرجة متدنية ولا يتصف بالشمولية ويحتاج لخبرات سابقة)، ويختلف توفير بيانات أداء ونمو المعلمين والمشرفين ومديري المدارس وحاجاتهم التدريبية باختلاف تصميم المنهج الإلكتروني.</p>
+                </div>
+
+                <h3>ثالثاً: باقي التنظيمات المنهجية المعاصرة والتقليدية</h3>
+                
+                <h4>1. منهج المواد الدراسية المنفصلة (Separate Subjects Curriculum):</h4>
+                <div class="card">
+                    <p><strong>مفهومه وخصائصه:</strong> يعد أول وأقدم أنواع المناهج ومضى عليه أكثر من قرن، ولذا سمي بالمنهج التقليدي في معظم أنحاء العالم. لا يجد غنى عن الكتاب المدرسي، ويؤكد على أهمية تعلم المحتوى لا الاهتمام بالطلبة الذين يتعلمون. يتألف من عدد كبير نسبياً من المواد التي تدرس منفصلة عن بعضها، بل وضعت حواجز فاصلة بين نوع المادة الواحدة (ففي اللغة العربية تُفصل المطالعة عن الأدب، النصوص، القواعد، وعن التعبير). يدرس الطلبة 5 إلى 6 مواد يومياً كل مادة في حصة منفصلة، ويقوم المدرس بتخطيط العمل في الصف وتوجيهه (رسم الخطة) دون دور إيجابي محدد للطالب سوى التلقي، ولهذا يفضله المدرسون دون الطلبة. ما زال مستخدماً في دول العالم الثالث والدول النامية، ويتبع منطق المادة نفسها ويركز عليها تماماً. وتخطط المادة وفق أسلوب منطقي متتابع وتجزأ المعرفة لموضوعات وأبواب وفصول، ووحدة بناء المنهج هي الخبرة الإنسانية التي أثبتت العقود نجاحها. ويؤيده أولياء الأمور لأنهم درسوا به، ويشعر المدرسون بالارتياح له، وأساليب تقويمه ليست معقدة ويحتاج لتخطيط مسبق.</p>
+                    <p><strong>مواطن الضعف (السلبيات):</strong> أكثر المواد ليس لها معنى عند الطلبة في حين أنها ذات معنى واضح للمدرسين. لا يساعد الطلبة على إدراك العلاقات المتداخلة بين مواضيع الدروس، ويعرقل الحصول على النتائج التعليمية المرغوبة. المواد لا تدرب العقل وتنظيمها ليس سيكولوجياً مناسباً، ويهمل المشكلات الاجتماعية وقلما يتطرق إليها. يهمل الأساس النفسي لعملية التعليم؛ إذ أن أهم أهدافه الاهتمام بالتحصيل دون الاهتمام باستخدام الطلبة لهذه المواد في الحياة اليومية. توجد هوة واسعة بين المدرسين والطلبة لتركيز المدرس على المادة فقط، وأصبح إتقان المادة هو الهدف والغاية، ويتفرد المدرس بالتقويم، ويفتقر للمنهج للتكامل وتجرى الأنشطة خارج المقررات.</p>
+                </div>
+
+                <h4>2. منهج المواد المتصلة - المترابطة (Correlated Subjects Curriculum):</h4>
+                <div class="card">
+                    <p><strong>مفهومه وأساليبه:</strong> انبثق لمعالجة ظاهرة عدم الترابط في المنهج التقليدي لتأكيد وحدة المعرفة، ونعني به أن المواد التي يدرسها الطالب تربط بينها صلة متبادلة بين درس الأمس واليوم والغد. ومصطلح الترابط يعني إيجاد العلاقات بين المواد أو بين موضوع من مادة وموضوع من مادة أخرى (كالربط بين التاريخ والجغرافيا والوطنية، أو بين طرائق التدريس والتعلم الحركي) ويتم بالاتفاق بين المدرسين لإجراء المقارنات وتنظيم المواد ليستند بعضها إلى الآخر. ويعتمد على أسلوبين في الربط:</p>
+                    <ul>
+                        <li><strong>أ- الربط العرضي أو حسب الظروف:</strong> تعني ترك الحرية للمدرس في توضيح العلاقات بين أجزاء المادة الواحدة أو مادة أخرى أو بين المواد ومواقف الحياة خارج المدرسة، وتبقى عملية الربط صناعية يقوم بها المدرس أحياناً وقد تضطره للخروج عن نطاق المقرر إلى دراسة أخرى خارج المقرر مما يزيد من مشكلات التدريس ويضطره لبذل جهد في التعرف على خلفية التلميذ العلمية وهو أمر صعب ومعقد.</li>
+                        <li><strong>ب- الربط المنظم:</strong> أسلوب يقوم به المدرسون في كل صف؛ حيث يتدارسون فيما بينهم ويخططون لربط ما يقوم به كل منهم في مجال تخصصه ومادته بالمواد الأخرى ويظهرون العلاقات لتسهيل فهمها وإتقانها من الطلبة. يتفق المدرسون على موضوعات خاصة تتيح فرصة الربط، ويجب على المدرس أثناء التدريس الإشارة للعلاقات الموجودة وفائدتها، ويُخصص لهذه المناهج مدرس يكون مرجعاً وعضو ارتباط لعمليات الربط.</li>
+                    </ul>
+                    <p><strong>السلبيات:</strong> تسير عملية الربط سيراً مصطنعاً وبشكل كبير، ولم تظهر العلاقات بين المواد مما لم يؤثر إيجاباً على زيادة شوق الطلبة أو إيصالهم للفهم الصحيح. كما أن العناية والاهتمام ما زالتا منصبتين على المادة الدراسية دون الربط بين المواد ومواقف الحياة خارج المدرسة.</p>
+                </div>
+
+                <h4>3. منهج المجالات الواسعة (Broad Fields Curriculum):</h4>
+                <div class="card">
+                    <p><strong>مفهومه وخصائصه وأثره:</strong> تعديل آخر على منهج المواد المنفصلة للتخلص من عيوبه دون إزالة الكثير من الحدود الفاصلة للمنهج التقليدي. يحاول ضم المواد الدراسية التي تكون بينها علاقات وثيقة بعضها ببعض في ميدان واحد (ففي المدرسة يُربط التاريخ والجغرافيا والتربية الوطنية وتسمى "الاجتماعيات"، وفي اللغة العربية يُربط الأدب مع النصوص والمطالعة والقواعد والتعبير والنقد، وفي الرياضة تربط المواد الطبية كالفسلجة والتشريح والطب الرياضي).</p>
+                    <p>هذا التنظيم لم يغير من خصائص المنهج التقليدي إلا من ناحية الشكل، وهو تقليل المواد الدراسية إلى عدد محدد بدلاً من كثرتها السابقة. وسار على أساس الخبرات الضرورية للحياة في المجتمع، ومن هنا جاء ربط ما يُدرس بمشكلات الحياة في المجتمع؛ حيث يقوم الطلبة بدراسة تلك المشكلات ومعالجتها عن طريق قيامهم بأوجه نشاط متنوع يدرسون من خلاله المواد، وقُسم المنهج لخبرات تساعد على التنشئة الاجتماعية وإيجاد العلاقات. كما أنها خبرات في التعبير عن النفس عبر الأنشطة (البحث، كتابة التقرير، التعبير اللغوي) والقيام بدراسة غير مباشرة لحياة الناس عبر الزيارات والرحلات وجولات في البيئة المحلية للحصول على معلومات من الطبيعة والفنون والنشاط الرياضي.</p>
+                    <p><strong>العيوب:</strong> يتجلى عيبه في كون الربط قد يكون ربطاً اصطناعياً، كما يحتاج إلى مدرسين وخبراء متدربين في عملية التخطيط والتنفيذ والدمج بين المواد، مما قد يفقد تنظيم المادة التنظيم المنطقي.</p>
+                </div>
+
+                <h4>4. المنهج المندمج (Fused Curriculum):</h4>
+                <div class="card">
+                    <p>يقصد به إزالة الحواجز الفاصلة بين المواد الدراسية وإدماج محتويات هذه المواد في مقررات أكثر اتساعاً بحيث تصبح مادة واحدة. ويتم ذلك في مستويين للدمج: (مستوى مجموعة متقاطعة/متقاربة من المواد، ومستوى مجموعة غير متقاربة من المواد). يتخلص من جميع قيود منهج المواد المنفصلة بتمزج المواد مزجاً تاماً وإزالة الفواصل، ويعتمد على إعطاء خبرات تعليمية دون تمييز بين مادة وأخرى وليس لها أي حد معلوم ويفسح المجال للطالب والمدرس للدراسة في كل التخصصات.</p>
+                    <p>إلا أن هذا الإدماج يتم مقدماً ويفرض على الطلبة فرضاً، وأحياناً يكون الإدماج اصطناعياً يفقد المادة أصالتها وكيانها ومحتواها، ولا يحقق الغرض المطلوب من إيصال المعرفة لكل المراحل لأن المواد لم تساعد الطلبة على حل المشكلات المستقبلية، وتكون الدراسة سطحية عامة ولم يستوعب الطلبة المواد، وبذلك فإن مثل هذا المنهج يصلح فقط لمرحلتي رياض الأطفال والمرحلة الأولى من الدراسة الابتدائية.</p>
+                </div>
+
+                <h4>5. المنهج المتكامل (Integrated Curriculum):</h4>
+                <div class="card">
+                    <p>رفض التفكير العلمي منهج المواد المنفصلة كما رفض منهج الدمج الكامل، للوصول إلى هدف تكامل المواد وليس تكامل الخبرة أو تكامل الشخصية عن طريق اختيار الطلبة أجزاء من المواد التي يشعرون بالحاجة إليها. واتجه التفكير لإيجاد "التكامل الطبيعي" للطلبة والفائدة التي يحصلون عليها من دراسة المواد المختلفة، وأن يعتني المنهج بنمو الطلبة جسمياً وعقلياً ونفسياً والاستفادة من المواد لمواجهة المشكلات التي تواجههم تحت الإشراف والتوجيه. ويتطلب المنهج المتكامل تهيئة الظروف والإمكانيات في المدرسة لتحقيق هذا التكامل والموازنة بين حاجات الفرد (الطلبة) وحاجات المجتمع وإيجاد العلاقات الترابطية بينهما.</p>
+                </div>
+
+                <h4>6. مناهج النشاط أو الخبرة أو طريقة المشروع (Activity Curriculum):</h4>
+                <div class="card">
+                    <p><strong>مفهومه وخصائصه:</strong> الأساس في هذه المناهج هو ميول الطلبة وحاجاتهم؛ فالفرد يبحث عن حلول للمشكلات الحياتية، والطلبة هم موضوع اهتمام المدرسين. قاد التطور لمنح فرص لممارسة الأنشطة المختلفة ومراعاة الميول وتلبية الحاجات والرغبات، والسماح للطلبة باختيار الموضوعات والدراسات التي تشبع ميولهم. يعبر عن تنظيم تفاعل المتعلم مع عناصر المواقف الحياتية المعيشية ليرد للمتعلم خبرات مفيدة ذات معنى، ويمر المتعلمون بخبرات مربية متنوعة تعلمهم وتؤدي لنضجهم المتكامل، ولا يوجد فيه انفصال بين نشاط المتعلمين داخل المدرسة أو خارجها بل يكملان بعضهما.</p>
+                    <p><strong>أبرز خصائصه:</strong> توثيق الصلة بين ما يدرسه المتعلم وبين حياته والبيئة، يحقق حاجات وميول المتعلم، يهتم بالمتعلم بدلاً من الاهتمام بالمادة الدراسية، يعمل على إتاحة فرصة النمو المتكامل، يتناسب مع الفروق الفردية، ويجعل المعلم موجهاً ومرشداً للمتعلمين فقط.</p>
+                    <p><strong>السلبيات:</strong> عدم إتاحة فرصة إتقان المواد الدراسية، المغالاة في الاهتمام بجوانب شخصية المتعلم، المغالاة في منح وإعطاء الحرية للمتعلم بلا قيود، الاحتياج إلى الكثير من الإمكانيات الباهظة، صعوبة إقامة برنامج تعليمي منظم يحقق التفاعل بين المتعلم والموقف، واتخاذ ميول المتعلم أساساً للنشاط التعليمي يؤدي إلى عدم التعرض للمشكلات الاجتماعية.</p>
+                </div>
+
+                <h4>7. المنهج المحوري (Core Curriculum):</h4>
+                <div class="card">
+                    <p><strong>مفهومه وخصائصه ومعوقاته:</strong> يعتمد التنظيم في المنهج المحوري على المادة الدراسية، لكن يتنوع المحتوى والوقت المتاح لكي يقابل الاحتياجات الفردية للمتعلمين. يتبنى حاجات المتعلمين ومشكلاتهم كـ "محور أو بؤرة" تدور حولها العملية التعليمية وأنشطتها، ويعرف بأنه (تنظيم للخبرات التعليمية التي تقدم لكل المتعلمين) لأنه يشتق من حاجات المتعلمين والمتطلبات الاجتماعية وأساليب التفكير.</p>
+                    <p><strong>أبرز خصائصه:</strong> التخطيط المشترك بين المعلم والمتعلم، يراعي الفروق الفردية، يدرب المتعلم على العمل الجماعي، يتيح الفرصة للمتعلمين لممارسة التفكير السليم علمياً، يتناول المادة الدراسية من كل الميادين، يعتبر التوجيه والإرشاد جزءاً أساسياً من المنهاج المحوري، ويوظف المعلومات المتضمنة في المنهاج لصالح الفرد والمجتمع.</p>
+                    <p><strong>المعوقات:</strong> يحتاج إلى تعاون مستمر بين جميع أعضاء هيئة التدريس بالمؤسسة التعليمية، يحتاج إلى إمكانيات باهظة، يحتاج إلى فصول دراسية محددة العدد، يحتاج إلى إدارة واعية لحل المشكلات الإدارية التي يمكن أن تقف أمام تنفيذه، ويتطلب تخصيص فترات زمنية طويلة نسبياً في اليوم الدراسي للبرنامج المحوري تتراوح هذه الفترة بين ساعتين وثلاث ساعات يومياً.</p>
+                </div>
+
+                <h4>8. المنهج الحلزوني (Spiral Curriculum):</h4>
+                <div class="card">
+                    <p>وضع هذا المنهاج في ضوء نظرية "برونر (Bruner)"؛ والذي يؤكد على تقديم المادة الدراسية إلى المتعلم في مراحل تعليمية مختلفة بصورة متكررة في المراحل ومتدرجة في التعقيد على وفق ما يسمح به نموه العقلي، فينشأ عند ذلك في نهاية المطاف صورة واضحة ومتكاملة لبنية العلم لدى المتعلم.</p>
+                    <p><strong>أمثلة تطبيقه:</strong> تدريس مفهوم التأكسد في العلوم في الابتدائية في صورة "صدأ الأجسام"، ثم تدريس المفهوم نفسه في المرحلة المتوسطة في صورة "اتحاد المادة بالأوكسجين"، ثم يدرسه الطلاب في المرحلة الثانوية في صورة "فقدان واكتساب إلكترونات" بعد تركيب ذرات المادة. وكذلك بالنسبة لمفهوم "التعاون"؛ بحيث يدرس من تعاون الأسرة إلى التعاون الدولي عبر المراحل الدراسية المتتابعة.</p>
+                </div>
+
+                <h4>9. المنهج الخفي الكامن (Hidden Curriculum):</h4>
+                <div class="card">
+                    <p>وهو المنهج الموازي أو غير الرسمي، ويمثل كافة الخبرات والمعارف والقيم والسلوك التي يقوم بها التلاميذ ويتعلمونها خارج المدرسة والمنهج المقرر من دون إشراف المعلم أو علمه في معظم الأحيان. كما يشمل ميول المعلمين وتفاعلهم ومعاملتهم للطلاب وفيما بينهم مع الإدارة، فضلاً عن المعارف والخبرات التي يكتسبها التلاميذ بعضهم من البعض الآخر. ويسمى بالتحصيل الدراسي الثاني بعد التحصيل الأكاديمي، وهو تعلم غير مقصود أو تعلم يصاحب العملية، ويكون أحياناً تأثيره أكثر من المنهج الرسمي المكتوب ويصعب توجييهه أو تتويجه.</p>
+                </div>
+
+                <h4>10. المنهج العالمي (Global Curriculum):</h4>
+                <div class="card">
+                    <p><strong>مفهومه وأسسه:</strong> هو المنهج الذي يعمل على إكساب المتعلم مقومات الفكر الإنساني العالمي الذي يستند إلى مفاهيم مشتركة تتجاوز نطاق المحلية والإقليمية، كالحرية والديمقراطية والسلام والاقتصاد التنافسي والتفكير الخلاق. وتنظم موضوعاته حول القضايا والمشكلات التي تمثل القاسم المشترك الأعظم لاهتمام المتعلمين وحاجاتهم وطموحاتهم وميولهم في كل مكان من الكرة الأرضية.</p>
+                    <p><strong>ويقوم على أربعة أسس:</strong>
+                        <ol>
+                            <li>يهتم اهتماماً بالغاً بالمعارف والتي تساعد المتعلم على مواصلة الدراسة والتعليم مدى الحياة.</li>
+                            <li>يكتسب المتعلم الخبرات العلمية والمعيشية التي تعينه على حل المشكلات الحياتية الحالية وتلك المحتملة في المستقبل.</li>
+                            <li>يزود المتعلم بمختلف الثقافة الإنسانية التي تبرز الجهود المتواصلة التي تمت عبر التاريخ.</li>
+                            <li>يجعل الأنشطة الترويحية جزءاً أصيلاً في محتواه.</li>
+                        </ol>
+                    </p>
+                    <p><strong>خصائصه:</strong> يعمل على توظيف تقنيات التعليم في جميع أجزاء المنهج وكافة مراحل التدريس. ويدعو المتعلم إلى التعلم واكتساب المعلومات بطريقة مباشرة وغير متسلسلة أي بطريقة انتقائية. ويؤكد على أهمية إكساب المتعلم أساليب التعلم وإجراءاته وكيفية استخدامها. ويركز على إعداد المتعلمين للعمل الجماعي وتنمية المهارات الاجتماعية لديهم مع استمرار التعلم الذاتي. ويولي أهمية متزايدة للفن والموسيقى بحسبان أنهما يسهمان بدرجة كبيرة في فهم الثقافة الإنسانية. ويؤكد فكرة التناول المتوازن للموضوعات والمواد التعليمية التي يشتمل عليها المحتوى. ويتطلب المزيد من العمل الجماعي في المشاريع ذات المدة الزمنية الطويلة. ويؤكد ضرورة أن يكون التعليم عن طريق الإعداد المستقبلي للمتعلم لذلك يؤكد على التعلم الذاتي، وأهمية الانتقال والتغير السريع في كافة عناصره.</p>
+                </div>
+
+                <h4>11. المنهج البيئي (Environmental Curriculum):</h4>
+                <div class="card">
+                    <p><strong>مفهومه وأسسه:</strong> هو المنهج الذي يعتمد على البيئة المحيطة بالتعلم، فيبنى على ما تشتمل عليه من مشكلات ومجالات متعددة، بقصد ربط ما يتعلمه هذا المتعلم بالحياة من حوله، مما يعمل على زيادة تفاعله مع بيئته وتأثيره فيها بصورة أفضل مما يسهم في حمايتها وإنمائها وحل مشكلاتها.</p>
+                    <p><strong>ويقوم على أسس تشمل:</strong> (1- البدء بالخبرات البيئية البسيطة التي ترتبط بما هو مألوف لديهم ومتوافر حولهم، 2- توفير خبرات إيجابية متكررة للتلاميذ في الهواء الطلق خارج جدران الفصل، 3- التركيز على خوض التجربة البيئية بدلاً من التلقين، 4- تناول المشكلات البيئية المحلية ثم الانتقال إلى الإقليمية فالعالمية، 5- إتاحة الفرصة الكافية للمتعلمين للمشاركة في تخطيط مناهج التربية البيئية وتدارس مشكلاتها والتوصل لحلول مناسبة، 6- ضرورة تنويع الطرق والأنشطة والوسائل التعليمية المصاحبة لتحقيق أهداف التربية البيئية في مختلف مراحل التعليم، 7- تقديم النموذج الأمثل لرعاية البيئة واحترامها).</p>
+                    <p><strong>المميزات:</strong> يكسب المتعلم المعلومات والمهارات والاتجاهات والقيم اللازمة للتعامل مع البيئة المحيطة بنجاح وفاعلية. يزيد من دافعية المتعلم من خلال ما يراه في البيئة المحيطة، ويربط بين المدرسة والبيئة. يسهم في تنمية البيئة المحلية من خلال التركيز على مجتمع المتعلم، ويزيل الحدود الفاصلة بين العلوم المختلفة. ويجعل المعلومات أكثر وظيفة وفائدة إذ يوظف ما توصل إليه العلم في حل المشكلات البيئية، وينمي لدى المتعلمين الاتجاهات الإيجابية نحو عناصر البيئة والعمل على الحفاظ عليها.</p>
+                    <p><strong>العيوب:</strong> يحتاج إلى تطوير مستمر ومتلاحق وهذا يعني مزيداً من الجهد والمتابعة والتكلفة. تتسم موضوعاته بالتعقيد والتداخل، ويحتاج من المعلم إلى جهد كبير. يحتاج إلى وسائل تعليمية غير تقليدية وهذا يعني تكلفة كبيرة. ويحتاج إلى طرائق متنوعة وغير تقليدية وإلى معلم معد إعداداً خاصاً. كما يحتاج إلى أساليب تقويم حديثة كملفات التقويم (البورتفليو) وهذه يصعب توافرها في المدارس كما يصعب استخدامها مع المجموعات الكبيرة، ويُعاب عليه أنه قد يضعف الانتماء الوطني للمتعلم.</p>
+                </div>
+            </section>
+
+            <!-- QUIZZES SECTION -->
+            <section id="quizzes" class="content-section">
+                <h2>الاختبارات التفاعلية الشاملة 📝</h2>
+                <p style="margin-bottom: 20px; font-weight: 500;">أجب عن الأسئلة التالية لقياس مدى استيعابك الدقيق للمادة العلمية. ستحصل على تغذية راجعة فورية تذكر الصواب والخطأ مع التعليل العلمي الدقيق من واقع المتن:</p>
+                
+                <div id="quiz-container">
+                    <!-- Questions will be injected by JavaScript dynamically for pure containment -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 جميع الحقوق محفوظة لمنصة Y_EDUX التعليمية</p>
+        <p style="font-size: 12px; margin-top: 5px; color:#777;">تصميم وتطوير: MR. YOUSSEF ALI | للتواصل واتساب: 01034288343</p>
+    </footer>
+
+    <script>
+        // Tab switching logic
+        function switchSection(sectionId, btn) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(sec => sec.classList.remove('active'));
+            
+            // Remove active class from buttons
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            
+            // Show target section and activate button
+            document.getElementById(sectionId).classList.add('active');
+            btn.classList.add('active');
+            
+            // Scroll to top of main text container safely
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // Tree structure interaction
+        document.querySelectorAll('.node').forEach(node => {
+            node.addEventListener('click', function() {
+                const nextUl = this.nextElementSibling;
+                if (nextUl && nextUl.tagName === 'UL') {
+                    if (nextUl.style.display === 'none') {
+                        nextUl.style.display = 'block';
+                        this.style.opacity = '1';
+                    } else {
+                        nextUl.style.display = 'none';
+                        this.style.opacity = '0.6';
+                    }
+                }
+            });
+        });
+
+  
+  
+  const quizData = [
+    // ==========================================
+    // الفصل الأول: مفهوم المنهج المدرسي (1 - 20)
+    // ==========================================
+    {
+        id: 1,
+        question: "الاشتقاق اللغوي الأصيل لمصطلح المنهج (Curriculum) في الفكر التربوي الغربي يعود إلى:",
+        options: ["صيغة شاملة للتأمل الفلسفي اليوناني", "مضمار السباق أو ما يجري في المهرجانات في الأصل اللاتيني", "وثيقة التعلم المكتوبة في العصر الفرنسي الموسوعي", "طريقة تنظيم الغايات النهائية للتعليم السلوكي"],
+        correct: 1,
+        explanation: "يعود مصطلح Curriculum تاريخياً إلى أصل لاتيني صريح يعني مضمار السباق أو الأنشطة الجارية بالمهرجانات قبل تحوله الدلالي للمقررات."
+    },
+    {
+        id: 2,
+        question: "سادت في القرنين الثامن عشر والتاسع عشر نظرة تقليدية ترى ضرورة اقتصار المنهج في المرحلتين الابتدائية والإعدادية على المواد ذات صفة الدوام.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "عبارة صحيحة تماماً وفق المتن؛ حيث سادت نظرة تقصر مناهج الابتدائية والإعدادية على مواد صفة الدوام كالنحو والرياضيات والمنطق."
+    },
+    {
+        id: 3,
+        question: "أي مما يلي يمثل الميادين الخمسة الأساسية التي طالب المربون قديماً باقتصار المنهج عليها؟",
+        options: ["اللغة القومية، الرياضيات، العلوم، التاريخ، اللغات الأجنبية", "الفلسفة، المنطق، النحو، الفلك، الزراعة", "العلوم الإنسانية، الصناعة، الرياضة، علم النفس، الفنون", "التكنولوجيا، الاجتماعيات، اللغات الكلاسيكية، الجغرافيا، الدين"],
+        correct: 0,
+        explanation: "حدد التربويون قديماً الميادين الكبرى في خمسة: اللغة القومية، الرياضيات، العلوم، التاريخ، واللغات الأجنبية."
+    },
+    {
+        id: 4,
+        question: "وُصفت النظرة التقليدية للمنهج (كمادة دراسية) بقصر النظر لأنها واجهت صعوبة بالغة أمام ظاهرة الانفجار المعرفي في القرن العشرين وأهملت حاجات الطلاب.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ حصر المنهج في نقل المعرفة وحفظها تسبب في عجزه التام أمام تضاعف العلوم وحاجات المتعلمين المعاصرين."
+    },
+    {
+        id: 5,
+        question: "في النصف الأول من القرن العشرين، تحول التركيز التربوي ليعرف المنهج بأنه 'محصلة تفاعل المتعلم مع المواقف التعليمية تحت إشراف المدرسة'. هذا المفهوم نقل الخبرة من حالة:",
+        options: ["النشاط إلى التلقين", "الجمود إلى النشاط والحرية الموجهة", "العمليات إلى الغايات النهائية المكتوبة", "العموميات الثقافية إلى البديلات المتغيرة"],
+        correct: 1,
+        explanation: "باعتبار المنهج محصلة خبرات وتفاعل، تحولت الخبرة من التلقين والجمود إلى النشاط والتفاعل الحيوي تحت إشراف المعلم."
+    },
+    {
+        id: 6,
+        question: "ركز العالمان 'كاسويل وكامبل' في أطروحاتهما لتطوير مفهوم المنهج كخبرة على وظيفة جوهرية للمدرسة هي:",
+        options: ["الإنتاج الاقتصادي والورش المهنية", "التنشئة الاجتماعية للمدرسة", "الانضباط العقلي الصارم عبر المواد المنفصلة", "عزل المدرسة عن مشكلات البيئة المحلية"],
+        correct: 1,
+        explanation: "وفق النص الأصلي، ركز كاسويل وكامبل على وظيفة التنشئة الاجتماعية للمؤسسة التعليمية كمحور للمنهج."
+    },
+    {
+        id: 7,
+        question: "عرّف 'تايلر' (1956) المنهج بأنه: جميع الخبرات التعليمية المخططة والمشرف عليها لتحقيق الأهداف التربوية.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ تعريف تايلر يرتكز على دمج 'التخطيط' و'الإشراف' كشرطين أساسيين لتحقيق الأهداف."
+    },
+    {
+        id: 8,
+        question: "العالِم التربوي الذي ركز في نهاية الستينات على أن التعلم قد يكون جماعياً أو فردياً، داخل المدرسة أو خارجها، طالما أنه 'مخطط له' هو:",
+        options: ["جون ديوي", "هيلدا تابا", "كير (Kerr)", "جونسون"],
+        correct: 2,
+        explanation: "كير هو من ركز على شمولية التعلم الفردي والجماعي الداخلي والخارجي شريطة وجود التخطيط المسبق."
+    },
+    {
+        id: 9,
+        question: "يرى العالِم 'جونسون' أن المنهج يجب أن يهتم بـ 'النتائج أو الغايات النهائية' وليس بما يفعله الطلاب أثناء الموقف التعليمي.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ جونسون يمثل اتجاه 'نواتج التعلم' الذي يفصل بوضوح بين الوسائل (التدريس) والغايات (المنهج)."
+    },
+    {
+        id: 10,
+        question: "طرح 'تانر' مفهوماً شاملاً يرى المنهج 'خبرات تعلم مخططة وموجهة ونواتج مقصودة'، واعتبر المعرفة في ضوئه عملية:",
+        options: ["ثابتة ومقدسة لا تقبل النقد", "ذهنية بحتة منزوعة النشاط العملي", "ديناميكية وليست ثابتة تهدف للنمو الشامل للمتعلم والمجتمع", "عشوائية تتبع ميول الطفل دون تخطيط مسبق"],
+        correct: 2,
+        explanation: "يرى تانر المعرفة كعملية ديناميكية متطورة تستهدف التوفيق بين حاجات الفرد المتكامل ومتطلبات المجتمع."
+    },
+    {
+        id: 11,
+        question: "في ظل الاتجاهات التقليدية (المنهج كمادة دراسية)، ينحصر دور المعلم المهني في عملية:",
+        options: ["التوجيه والإرشاد الهندسي للمعرفة", "النقل والتلقين وتبسيط المعلومات فقط", "تصميم المواقف وحل المشكلات البيئية", "التخطيط المشترك مع المتعلم لبناء الاختبارات"],
+        correct: 1,
+        explanation: "المناهج التقليدية تجعل المعلم مجرد أداة لتوصيل وتلقين محتوى الكتاب المدرسي الجاهز."
+    },
+    {
+        id: 12,
+        question: "من الآثار السلبية للمنهج التقليدي على المادة الدراسية أنه أدى لتضخم المقررات وضعف الترابط بين المواد والتركيز على النجاح بالاختبارات.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ نتيجة لتقديس المادة لذاتها تضخمت الكتب وعُزلت العلوم عن بعضها وأصبح الاختبار هو الغاية."
+    },
+    {
+        id: 13,
+        question: "الاتجاه الحديث الذي ركز على حاجات الطفل واهتماماته وجعل المدرسة وسيلة لتزويد الطلاب بفرص للمرور بخبرات مرغوبة يتزعمه الفيلسوف:",
+        options: ["فينكس", "بوشامب", "جون ديوي", "وليم باجلي"],
+        correct: 2,
+        explanation: "جون ديوي هو رائد اتجاه 'المنهج كخبرات' والقائم على وضع الطفل وميوله وحاجاته كمرتكز للعملية التربوية."
+    },
+    {
+        id: 14,
+        question: "يركز اتجاه 'المنهج كأنماط تفكير' (والذي نادى به فينكس وبيل) على التفكير التأملي والاستقصائي المنظم وتوفير القدرة على تنظيم المفاهيم.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ هذا الاتجاه يرى المنهج وسيلة لتدريب العقل على الاستقصاء وبناء الهياكل الفكرية والمنطقية."
+    },
+    {
+        id: 15,
+        question: "مفهوم المنهج كـ 'خطة مكتوبة' (بوشامب وهاس) يضع تفرقة حاسمة ودقيقة بين نوعين من المناهج هما المنهج المكتوب و:",
+        options: ["المنهج الوظيفي (الواقعي)", "المنهج الخفي الكامن", "المنهج الحلزوني التكنولوجي", "المنهج الموسوعي التقليدي"],
+        correct: 0,
+        explanation: "يميز هذا الاتجاه بين الوثيقة الرسمية المكتوبة وبين ما يطبق ويعيشه الطالب فعلياً في الواقع (المنهج الوظيفي)."
+    },
+    {
+        id: 16,
+        question: "وفقاً لنموذج نظام الإنتاج عند 'بوشامب'، فإن 'خبرة المعلم، وخصائص المجتمع، وأسس التربية' تندرج تحت بعد:",
+        options: ["العمليات", "المخرجات", "المدخلات", "التغذية الراجعة"],
+        correct: 2,
+        explanation: "تمثل خصائص المجتمع، خبرة المعلم، والقيم الثقافية والأسس التربوية 'بيانات المدخلات' الأساسية للنظام المعرفي."
+    },
+    {
+        id: 17,
+        question: "إجراءات اختيار الميدان، وتخطيط وكتابة المنهج، وتصميم أساليب التنفيذ والتقييم تمثل بعد 'المخرجات' في نموذج بوشامب.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 1,
+        explanation: "خاطئة؛ هذه الإجراءات تمثل بعد 'العمليات' (Processes) وليس المخرجات."
+    },
+    {
+        id: 18,
+        question: "ما يترتب على المنهج كنظام إنتاج من 'زيادة المعارف، وتغيير الاتجاهات، والالتزام بالعمل' يمثل بعد:",
+        options: ["المدخلات", "المخرجات", "العمليات", "التنظيم النفسي"],
+        correct: 1,
+        explanation: "التغير الحادث في سلوك الطلاب ومعارفهم واتجاهاتهم يمثل الناتج النهائي أو 'المخرجات' لنظام المنهج."
+    },
+    {
+        id: 19,
+        question: "من الآثار السلبية للمنهج التقليدي على الطلاب أنه يشجع على التنافس الفردي الأناني بدلاً من التعاون ويهمل الفروق الفردية.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ لحصر التقييم في الحفظ الفردي للاختبارات، غابت روح العمل الجماعي وعومل الطلاب كقالب واحد."
+    },
+    {
+        id: 20,
+        question: "عزلة المدرسة عن المجتمع وغياب الأنشطة الهادفة واستخدام أساليب التهديد والوعيد هي نتاج طبيعي لتطبيق الاتجاهات الحديثة للمنهج.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 1,
+        explanation: "خاطئة؛ هذه الأوصاف هي من أبشع الآثار السلبية المترتبة على المنهج بمفهومه التقليدي الجامد."
+    },
+
+    // ==========================================
+    // الفصل الثاني: عناصر المنهج المدرسي (21 - 40)
+    // ==========================================
+    {
+        id: 21,
+        question: "الأهداف شديدة العمومية والتجريد والمثالية التي تضعها الدولة وتستغرق عقوداً أو سنوات طويلة لتحقيقها تسمى:",
+        options: ["الأهداف التعليمية المتوسطة", "الأهداف السلوكية الإجرائية", "الأهداف العامة للمقررات", "الغايات التربوية (الأهداف الإستراتيجية)"],
+        correct: 3,
+        explanation: "الغايات التربوية هي المستوى الأقصى تجريداً وعمومية (مثل إعداد المواطن الصالح) وتضعها السياسات العليا للدولة."
+    },
+    {
+        id: 22,
+        question: "الهدف القائل: 'أن يتقن الطالب مهارات التفكير العلمي من خلال دراسة مقرر الفيزياء' يصنف ضمن مستويات الأهداف كهدف تعليمي متوسط.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ لأنه يرتبط بمقرر دراسي معين خلال فصل أو عام دراسي، وهي الأهداف المتوسطة."
+    },
+    {
+        id: 23,
+        question: "المعادلة القياسية الصحيحة لصياغة الأهداف السلوكية الإجرائية المحددة هي:",
+        options: ["أن + المعلم + يشرح المحتوى المعرفي + زمن الحصة", "أن + فعل مضارع غير قابل للقياس + الطالب + ناتج التعلم", "أن + فعل مضارع سلوكي قابل للملاحظة والقياس + الطالب + المحتوى التعليمي + حد أدنى للأداء", "المحتوى التعليمي + الاختبار النهائي + الطالب + درجة النجاح"],
+        correct: 2,
+        explanation: "تتطلب الصياغة السلوكية الدقيقة للفصل: أن + فعل سلوكي مضارع يقاس + الطالب + المادة المعرفية + حد أدنى للأداء (اختياري)."
+    },
+    {
+        id: 24,
+        question: "في تصنيف بلوم للمجال المعرفي، القدرة على صياغة المادة المعرفية بأسلوب الطالب الخاص أو تفسيرها تمثل مستوى الفهم (الاستيعاب).",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ الفهم يتجاوز التذكر الآلي إلى القدرة على التفسير والشرح وإعادة الصياغة بالأسلوب الذاتي."
+    },
+    {
+        id: 25,
+        question: "عندما يقوم الطالب بـ 'تفكيك المادة المعرفية إلى عناصرها ومكوناتها الجزئية لمعرفة العلاقات بينها' فإنه يمارس مستوى:",
+        options: ["التطبيق", "التحليل", "التركيب", "التقويم"],
+        correct: 1,
+        explanation: "التحليل هو تفكيك الكل إلى أجزائه ومكوناته لمعرفة العلاقات البينية الرابطة بين هذه الأجزاء."
+    },
+    {
+        id: 26,
+        question: "مستوى 'التركيب' في تصنيف بلوم يعني وضع العناصر والأجزاء معاً لتشكيل قالب أو كل جديد ومبتكر.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ التركيب هو عملية إنتاج قالب إبداعي جديد من أجزاء متفرقة (أفعاله: يبتكر، يؤلف، يصمم)."
+    },
+    {
+        id: 27,
+        question: "أعلى مستويات المجال الوجداني في تصنيف كراثوول (Krathwohl) والذي يوجه سلوك المتعلم بشكل دائم وتلقائي هو:",
+        options: ["الاستقبال (الانتباه)", "التقييم وإعطاء قيمة", "التنظيم القيمي", "التميز بقيمة (تجسيد القيمة)"],
+        correct: 3,
+        explanation: "التميز بقيمة هو ذروة النمو الوجداني؛ حيث تندمج القيمة في هوية المتعلم وتصبح موجهة لتصرفاته وعقيدته الحياتية بشكل تلقائي."
+    },
+    {
+        id: 28,
+        question: "في المجال الوجداني، يمثل 'التفاعل الإيجابي والمشاركة الفعالة مع المثير وليس مجرد الانتباه له' مستوى الاستجابة.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ الاستجابة تتجاوز السلبية والانتباه (الاستقبال) إلى التفاعل العملي والمشاركة (يجيب، يشارك، يتطوع)."
+    },
+    {
+        id: 29,
+        question: "المراحل الأولى لتعلم مهارة حركية معقدة تحت إشراف المعلم عن طريق 'التقليد والمحاولة والخطأ' تمثل في تصنيف سمبسون مستوى:",
+        options: ["الإدراك الحسي", "الميل أو الاستعداد", "الاستجابة الموجهة", "الآلية أو التعويد"],
+        correct: 2,
+        explanation: "الاستجابة الموجهة تعبر عن بدايات تعلم المهارة ميكانيكياً عبر تقليد حركات المعلم ومجابهة الخطأ والصواب."
+    },
+    {
+        id: 30,
+        question: "مستوى 'التكيف أو التعديل' في المجال النفس حركي يعني إيجاد حركات وأنماط جديدة ومبتكرة تماماً ولم تكن معروفة من قبل.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 1,
+        explanation: "خاطئة؛ إيجاد حركات جديدة تماماً هو مستوى 'الابتكار/الإبداع'، أما 'التكيف' فهو تعديل المهارة الحالية لتناسب موقفاً جديداً."
+    },
+    {
+        id: 31,
+        question: "قمة الهرم في البنية المعرفية للمحتوى التعليمي، وهي عبارة عن تعميمات وأفكار مترابطة تم التحقق منها تجريبياً لتفسير الظواهر هي:",
+        options: ["الحقائق الجزئية", "المفاهيم المجردة", "التعميمات والمبادئ", "القوانين والنظريات"],
+        correct: 3,
+        explanation: "تمثل القوانين والنظريات قمة البنية المعرفية الهرمية؛ حيث تقدم تفسيرات شاملة مدعومة بالتجريب العلمي لكافة الظواهر."
+    },
+    {
+        id: 32,
+        question: "العبارة القائلة: 'عاصمة مصر هي القاهرة' تعد نموذجاً لـ 'المفهوم التعليمي المجرد'.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 1,
+        explanation: "خاطئة؛ هذه معلومة جزئية ثبتت صحتها ولا تحتاج لبرهان، وبالتالي فهي تصنف كـ 'حقيقة' (Fact) وليس مفهوماً."
+    },
+    {
+        id: 33,
+        question: "عندما يتم ترتيب المحتوى المعرفي للمنهج بناءً على 'قدرات الطلاب، وميولهم، واستعداداتهم النفسية والعقلية' فإننا نتبع:",
+        options: ["التنظيم المنطقي للمادة", "التنظيم النفسي للمتعلم", "التكامل الأفقي المتسق", "التنظيم الحلزوني التكنولوجي"],
+        correct: 1,
+        explanation: "التنظيم النفسي يراعي سيكولوجية المتعلم وميوله، بينما التنظيم المنطقي يراعي طبيعة العلم وتدرجه من السهل للصعب."
+    },
+    {
+        id: 34,
+        question: "التكامل الأفقي (الاتساق) في تنظيم المحتوى يعني ترابط المادة وتطورها من سنة دراسية إلى أخرى يبنى عليها.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 1,
+        explanation: "خاطئة؛ ترابط المادة من سنة لأخرى هو 'تكامل رأسي (استمرارية)'، أما 'الأفقي' فهو ترابط المواد المختلفة الممنوحة في نفس السنة الدراسية."
+    },
+    {
+        id: 35,
+        question: "طرق التدريس التي يكون فيها المعلم هو المصدر الوحيد للمعلومة ودور الطالب سلبي ومستمع متلقٍ تصنف كطرق تمركزت حول:",
+        options: ["المتعلم (الحديثة)", "المعلم (التقليدية)", "البيئة والأنشطة", "التفاعل المشترك"],
+        correct: 1,
+        explanation: "الطرق المتمركزة حول المعلم كالإلقاء والمحاضرة تجعل المعلم محور الإرسال والتلميذ مجرد وعاء سلبي للتلقي."
+    },
+    {
+        id: 36,
+        question: "الأنشطة التعليمية التي تتم خارج غرفة الصف أو خارج المدرسة لكن بتخطيط مسبق منها (مثل الزيارات والمتاحف والرحلات الميدانية) تسمى أنشطة صفية.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 1,
+        explanation: "خاطئة؛ هذه تسمى 'أنشطة لا صفية' لأنها تتم خارج أسوار الفصل الدراسي وغرفته تكميلاً للمنهج."
+    },
+    {
+        id: 37,
+        question: "العملية التي تهدف لإعطاء 'تقدير كمي (رقمي)' لصفة أو سلوك معين باستخدام أداة محددة (مثل حصول الطالب على 15 من 20) هي:",
+        options: ["التقييم (Assessment)", "التقويم (Evaluation)", "القياس (Measurement)", "التنظيم النفسي"],
+        correct: 2,
+        explanation: "القياس عملية رقمية بحتة تعبر عن السلوك بلغة الأرقام والكم دون إصدار أحكام أو وضع خطط علاجية."
+    },
+    {
+        id: 38,
+        question: "التقويم (Evaluation) يتضمن القياس والتقييم معاً بالإضافة إلى اتخاذ إجراءات التعديل والعلاج والإصلاح.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ التميز الجوهري للتقويم هو كونه تشخيصاً وعلاجاً معاً (التقويم = تشخيص + علاج)."
+    },
+    {
+        id: 39,
+        question: "التقويم التربوي الذي يتم أثناء سير العملية التعليمية وخلال شرح الدرس لتزويد المعلم بـ 'تغذية راجعة فورية' لتعديل المسار هو التقويم:",
+        options: ["القبلي (التشخيصي)", "التكويني (البنائي المستمر)", "الختامي (النهائي)", "المعياري المكتوب"],
+        correct: 1,
+        explanation: "التقويم التكويني (البنائي) يلازم الشرح خطوة بخطوة لرصد الأخطاء وعلاجها فوراً وتعديل الإستراتيجيات."
+    },
+    {
+        id: 40,
+        question: "من شروط التقويم الجيد 'الموضوعية'، وتعني أن تتأثر نتائج التقويم وأحكامه بذاتية المصحح أو المعلم وآرائه الشخصية وعاطفته.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 1,
+        explanation: "خاطئة; الموضوعية تعني تماماً 'عدم تأثر' النتائج بذاتية المعلم أو المصحح، لضمان العدالة والثبات."
+    },
+
+    // ==========================================
+    // الفصل الثالث: أسس بناء المنهج المدرسي (41 - 60)
+    // ==========================================
+    {
+        id: 41,
+        question: "يتميز 'الأساس العقائدي الشرعي الرباني' عن الأساس الفلسفي الوضعي بكونه:",
+        options: ["قابلاً للتغيير والنقد والسقوط البشري", "مصدره إلهي ثابت جامع لكل جيد ومفيد ونابذ لكل سيء وضار", "مشتقاً من فلسفات إنسانية يونانية قديمة", "مرتكزاً على تفريد التعليم المبرمج آلياً"],
+        correct: 1,
+        explanation: "الأساس العقائدي الإسلامي رباني المصدر يتميز بالثبات والشمول والكمال المطلق بخلاف الفلسفات الوضعية البشرية المتغيرة."
+    },
+    {
+        id: 42,
+        question: "اصطلاحاً، الفلسفة هي محاولة دقيقة منظمة للربط بين الكون والحياة البشرية لكشف طبيعة الكون وعلاقتنا به وإشباع حب الاستطلاع.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ هذا هو التعريف الاصطلاحي الشامل المقر بالفصل الثالث للفلسفة والتأمل البشري."
+    },
+    {
+        id: 43,
+        question: "يرى الفيلسوف 'كارل جاسبرس' أن جوهر الفلسفة الحقيقي يكمن في:",
+        options: ["امتلاك المعرفة المطلقة والسيطرة عليها", "البحث المستمر عن المعرفة وليس امتلاكها", "حفظ التراث الثقافي ونقله بجمود", "تفكيك البنية المعرفية لهرم المحتوى"],
+        correct: 1,
+        explanation: "حسب جاسبرس، العالم هو من يمتلك المعرفة، أما الفيلسوف فجوهره هو الشغف والبحث الدائم عنها."
+    },
+    {
+        id: 44,
+        question: "وظيفة المنهج في ظل 'الفلسفة التقليدية المثالية' (أفلاطون) تنحصر في نقل التراث الثقافي وحفظه والتركيز على الجانب المعرفي فقط وإهمال الميول والأنشطة.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ لكونها تفصل الفكر عن العمل وترى الأفكار أزلية ثابتة، فركزت على شحن العقول بالتراث وإهمال المتعلم."
+    },
+    {
+        id: 45,
+        question: "تسببت الفلسفة التقليدية في ظهور تنظيم منهجي شهير أحدث فصلاً مصطنعاً بين العلوم الإنسانية والطبيعية هو:",
+        options: ["منهج النشاط والخبرة", "المنهج التكنولوجي الحلزوني", "منهج المواد الدراسية المنفصلة", "المنهج العالمي المشترك"],
+        correct: 2,
+        explanation: "منهج المواد المنفصلة هو النتاج المباشر للمثالية والتقليدية التي قدست المواد لذاتها وعزلتها خلف حواجز صلبة."
+    },
+    {
+        id: 46,
+        question: "ترى الفلسفة التقدمية البرجماتية النفعية (ديوي وبيرس) أن العقل ليس مجرد أداة للمعرفة بل هو أداة للحياة، وأن العمل برهان صحة الفكرة.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ البرجماتية تربط الفكر بالعمل وتجعل المنفعة والتطبيق العملي مقياساً وحيداً لصحة الأفكار التربوية."
+    },
+    {
+        id: 47,
+        question: "أدى انعكاس الفلسفة التقدمية البرجماتية على المنهج إلى إزالة الحواجز بين المواد وظهور تنظيمات حديثة أبرزها:",
+        options: ["منهج المواد المنفصلة وقواميس المعرفة", "منهج النشاط والمنهج المحوري", "بنوك الأسئلة والاختبارات الإلكترونية", "المنهج البيئي الكامن والخلفيات التوقيفية"],
+        correct: 1,
+        explanation: "منهج النشاط والمنهج المحوري يرتكزان على نشاط المتعلم وحل المشكلات، وهما الابن الشرعي للفلسفة البرجماتية."
+    },
+    {
+        id: 48,
+        question: "يرى الفريق الأول في الفكر التربوي الإسلامي أن المعرفة 'فطرية توقيفية' كامنة في نفس الإنسان منذ الولادة ويستدلون بقوله تعالى: ﴿وَعَلَّمَ آدَمَ الْأَسْمَاءَ كُلَّهَا﴾.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ يرى هذا الفريق أن التعليم هو عملية تحريك وإثارة لما هو مضمر وكامن بالفطرة داخل النفس البشرية."
+    },
+    {
+        id: 49,
+        question: "الفريق الإسلامي الثاني الذي يرى المعرفة 'مكتسبة' عبر العقل والحواس (﴿وَاللَّهُ أَخْرَجَكُمْ مِنْ بُطُونِ أُمَّهَاتِكُمْ لَا تَعْلَمُونَ شَيْئًا﴾) ينسجم تربوياً مع:",
+        options: ["التربية التقليدية القائمة على التلقين والجمود", "التربية الحديثة التي تؤكد على إيجابية المتعلم ونشاطه واكتشافه للحقائق", "النظرية الموسوعية في حشو الرؤوس بالمعلومات", "أساليب التهديد والوعيد لإجبار المتعلم على الحفظ"],
+        correct: 1,
+        explanation: "التأكيد على أن المعرفة تكتسب بالعمل والحواس يتطابق مع المدرسة الحديثة القائمة على بناء المعرفة بالنشاط الذاتي والاستقصاء."
+    },
+    {
+        id: 50,
+        question: "القدرة الباطنة على فهم الحقيقة مباشرة دون حاجة إلى حواس أو تفكير منطقي منظم تعبر عن أي مصدر من مصادر المعرفة العامة؟",
+        options: ["العقل والتأمل البحت", "التراث والموروث الثقافي", "الحدس", "الوحي والتشريع"],
+        correct: 2,
+        explanation: "الحدس هو الإدراك الباطني المباشر والفوري للحقيقة دون وسائط حسية أو استدلالات منطقية خطية."
+    },
+    {
+        id: 51,
+        question: "يختار واضعو المناهج المعارف المناسبة بتدارس وجهات نظر ستة مصادر، من بينها 'أصحاب قطاعات العمل' لتحديد نوعية التأهيل المطلوبة لسوق العمل.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ سوق العمل وقطاعاته مصدر رئيسي لتحديد مواصفات الخريجين والمهارات الأدائية المطلوبة بالمحتوى."
+    },
+    {
+        id: 52,
+        question: "يقصد بـ 'الأساس الاجتماعي' لبناء المنهج المدرسي:",
+        options: ["المبادئ النفسية المتصلة بخصائص نمو المتعلم وحاجاته", "بنية المعرفة وحقائقها العلمية المتطورة والتخصصات الدقيقة", "مجموعة المقومات والركائز ذات العلاقة بالمجتمع وظروفه وعاداته وقيمه ومشكلاته", "تطبيق الأساليب التكنولوجية وتطويع الأجهزة الفائقة"],
+        correct: 2,
+        explanation: "الأساس الاجتماعي يمثل مرآة المجتمع وطموحاته وعاداته وثقافته التي ينبغي للمنهج صيانتها وإعداد الأجيال وفقها."
+    },
+    {
+        id: 53,
+        question: "وفقاً لتقسيم جودت سعادة لمكونات الثقافة، فإن 'العموميات' تشمل أنماط سلوك خاصة بقطاع أو فئة أو مهنة معينة كالأطباء أو المهندسين.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 1,
+        explanation: "خاطئة؛ سلوك المهندسين والأطباء يمثل 'الخصوصيات'، أما 'العموميات' فهي ما يشترك فيه غالبية المجتمع كاللغة والزي والتقاليد العامة."
+    },
+    {
+        id: 54,
+        question: "الأنماط الثقافية المتجددة والمتغيرة التي يشترك فيها عدد محدود من الأفراد (كاتباع طريقة حديثة في التربية أو أسلوب جديد بالعمل) تسمى:",
+        options: ["العموميات الثقافية", "الخصوصيات المهنية", "البديلات (المتغيرات)", "الأسس السيكولوجية"],
+        correct: 2,
+        explanation: "البديلات أو المتغيرات هي الأنماط التجريبية غير المستقرة؛ إما أن تختفي وإما أن تتحول لخصوصيات أو عموميات بمرور الزمن."
+    },
+    {
+        id: 55,
+        question: "تفرض خصائص الثقافة (كونها مكتسبة، متغيرة، إنسانية، تتفاعل عناصرها باستمرار) على المنهج المدرسي أن يتصف بـ 'المرونة والقدرة على التطور'.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ لئلا يصاب المنهج بالجمود والتخلف عن حركية الثقافة والمجتمع الواقعي."
+    },
+    {
+        id: 56,
+        question: "يقصد بـ 'الأساس النفسي' لبناء المنهج مجموعة المبادئ النفسية التي توصلت إليها بحوث علم النفس حول طبيعة المتعلم وطبيعة عملية التعلم.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ الأساس النفسي يعتني بفهم المتعلم (نموه، قدراته، استعداداته، حاجاته) وعملية التعلم ذاتها."
+    },
+    {
+        id: 57,
+        question: "الشعور الداخلي عند الفرد الذي يدفعه إلى الاهتمام بشيء أو تفضيله ويكون مصحوباً بالارتياح والرضا يعبر عن:",
+        options: ["الحاجة (Need)", "الميل (Interest)", "الاتجاه (Attitude)", "القدرة والاستعداد"],
+        correct: 1,
+        explanation: "الميل هو النزوع العاطفي المصحوب بالارتياح نحو مثير أو نشاط معين ويرتبط طردياً بإشباع الحاجات."
+    },
+    {
+        id: 58,
+        question: "التعلم اصطلاحاً هو عملية نفسية يتم فيها التفاعل بين المتعلم ومادة التعلم، ويمكن ملاحظته ورصده بشكل مباشر ودائم.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 1,
+        explanation: "خاطئة؛ التعلم 'لا يمكن ملاحظته مباشرة'، بل هو عملية داخلية نُستدل عليها من خلال التغير الظاهر في السلوك."
+    },
+    {
+        id: 59,
+        question: "حسب المبادئ الخمسة للتعلم عند 'مندور فتح الله'، يتعلم التلاميذ بشكل أفضل إذا كان العمل ملائماً لمستوى نضجهم، مما يوجب:",
+        options: ["حشو المنهج بموضوعات تفوق سنهم لتحدي ذكائهم", "عدم إثقال المنهج بموضوعات تفوق سنهم العقلي والزمني", "الاعتماد الكلي على التعليم المبرمج الفردي المنعزل", "التركيز على التنظيم المنطقي وإهمال التنظيم النفسي"],
+        correct: 1,
+        explanation: "مراعاة مستوى النضج يمنع الإحباط التعليمي ويضمن هندسة المحتوى بما يلائم القدرات الاستيعابية لكل فئة عمرية."
+    },
+    {
+        id: 60,
+        question: "يكون التعلم أكثر كفاية حين يرتبط بأغراض ودوافع التلميذ الحقيقية، ويتعلم التلميذ عدة أشياء في آن واحد من الموقف التعليمي الواحد.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ الارتباط بالدافع يمنح التعلم معنى، والموقف الواحد ينمي جوانب معرفية ووجدانية ومهارية متداخلة في آن واحد."
+    },
+
+    // ==========================================
+    // الفصل الرابع: نظريات المنهج المدرسي (61 - 80)
+    // ==========================================
+    {
+        id: 61,
+        question: "يُعتبر رائد حركة التنظير العلمي في مجال المناهج التربوية من خلال كتابه الصادر عام 1918م هو العالِم:",
+        options: ["جون ديوي", "هيلدا تابا", "بوبيت (Bobbitt)", "بوشامب"],
+        correct: 2,
+        explanation: "كتاب بوبيت 'المنهج' (1918م) يُعد حجر الأساس التاريخي الذي انطلقت منه حركة التنظير العلمي الممنهج."
+    },
+    {
+        id: 62,
+        question: "نادى بوبيت المربين باستعارة الكثير من أمور 'التكنولوجيا الجديدة' ومبادئ الإدارة لتطبيق النظرية والمساعدة في تصميم البرامج وتمهين التربية.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ طالب بوبيت باستعارة كفايات التنظيم الإداري والصناعي لضبط مخرجات البرامج التربوية وكفاءتها."
+    },
+    {
+        id: 63,
+        question: "استنبط الفيلسوف 'جون ديوي' نظريته لتنظير المنهج (المنهج المتمركز حول الخبرة) من فكرة مركزية ترى أن:",
+        options: ["المعرفة فطرية توقيفية لا تكتسب بالحواس", "المدرسة يجب أن تعزل الطلاب عن واقع المجتمع الفاسد", "تطور الفرد وتطور الجنس البشري متشابهان في المراحل العامة", "المعلم هو الدائرة المركزية الوحيدة والطلاب أوعية سلبية"],
+        correct: 2,
+        explanation: "بنى ديوي فكرته على التوازي بين تطور الفرد وتطور البشرية، ونادى بربط المعرفة بخبرات الأطفال من خلال الأنشطة الحية وعبر مدرسته التجريبية بشيكاغو."
+    },
+    {
+        id: 64,
+        question: "خلال فترة العشرينيات والثلاثينيات، اتجه معظم المتخصصين نحو 'المنهج المتمركز حول الطفل'، وقدموا إضافات نظرية ضخمة لدمج المبادئ العلمية بالمنهج.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 1,
+        explanation: "خاطئة؛ ينص المتن على أنهم انشغلوا بالطفل ولم يعملوا على إضافة ما هو مطلوب من نظرية المنهج أو دمج المبادئ العلمية فيه."
+    },
+    {
+        id: 65,
+        question: "تمتد الجذور التاريخية لـ 'النظرية الموسوعية الشاملة' إلى مقولات المعرفة الشاملة التي نادى بها العالم التربوي كومينيوس عام 1670م وازدهرت بفضل أصحاب دوائر المعارف الفرنسيين.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ كومينيوس وأصحاب دوائر المعارف الفرنسيين هم الآباء المؤسسون لفكرة الإحاطة بكافة علوم العالم داخل المنهج المكتوب."
+    },
+    {
+        id: 66,
+        question: "نادى أصحاب النظرية الموسوعية بـ 'سمو العقل على الوحي'، واعتقدوا أن الدين يربط العقل بسلاسل الجهل، وأن سعادة الإنسان تكمن في تطوير ذهنه المعرفي.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ تتبنى النظرية الموسوعية فكراً علمانياً عقلياً يرى المعرفة والعلوم التجريبية هي الخير الأسمى والسبيل الأوحد لتقدم البشرية."
+    },
+    {
+        id: 67,
+        question: "تحولت المدارس في ظل تطبيق 'النظرية الموسوعية الشاملة' إلى:",
+        options: ["ورش إنتاجية مرتبطة بالمصانع والمزارع", "حوانيت للمعرفة والمعلمون إلى عمال وظيفتهم تعبئة رؤوس الصغار بالحقائق", "مراكز إرشادية ونفسية تدور حول ميول الطفل بحرية مطلقة", "بيئات مبرمجة تقنياً قائمة على التعليم الفردي والخطو الذاتي"],
+        correct: 1,
+        explanation: "التركيز المطلق على شمولية المعرفة حوّل المدارس إلى مستودعات وحوانيت لشحن العقول بالحقائق، وتحولت الكتب إلى قواميس ضخمة وموسوعات مكتظة."
+    },
+    {
+        id: 68,
+        question: "العالِم التربوي الذي قام بتعريف 'النظرية الجوهرية' (أساسيات المعرفة) عام 1938م هو العالِم:",
+        options: ["بوشامب", "وليم باجلي (William Bagley)", "هيلدا تابا", "تايلر"],
+        correct: 1,
+        explanation: "وليم باجلي هو من صاغ النظرية الجوهرية المحافظة التي ترمي لنقل أساسيات المعرفة والتراث وتثبيت سلطة المعلم التقليدية."
+    },
+    {
+        id: 69,
+        question: "تُعتبر النظرية الجوهرية نظرية 'محافظة'؛ لأنها ترمي إلى نقل المعتقدات والتراث من الجيل القديم إلى الجيل الحديث فالأحدث وعملها تزويد الطلبة بالقوى العقلية.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ هي نظرية تقاوم التغيير الجذري وتركز على التنظيم المنطقي الصارم للمواد الدراسية المقررة سلفاً."
+    },
+    {
+        id: 70,
+        question: "يركز المبدأ الأول للنظرية الجوهرية على مفهوم 'الجهد والعمل الشاق' بدلاً من التركيز على الاهتمامات المباشرة للمتعلم؛ لأن الاهتمامات تظهر من خلال العمل الشاق.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ ترفض النظرية الجوهرية تدليل المتعلم ومجاراة ميوله المباشرة، وترى أن السيطرة على المعرفة تتطلب جهداً وعملاً شاقاً وانضباطاً صارماً."
+    },
+    {
+        id: 71,
+        question: "ترجع الخلفية الإبستمولوجية (المعرفية) لـ 'النظرية البرجماتية' إلى الفكر التجريبي البريطاني الذي يرى أننا:",
+        options: ["نعرف الحقائق الكامنة المضمرة بالولادة تفكراً", "نعرف ما تحسه حواسنا فقط، والمعرفة نتاج التفاعل المستمر بين الإنسان وبيئته", "نتلقى المعرفة من عقول الكبار وسلطة المعلم المطلقة", "لا نملك القدرة على تعديل المنهج أو اختبار النظريات"],
+        correct: 1,
+        explanation: "تؤمن البرجماتية بالمعرفة الحسية الناتجة عن التفاعل العملي مع الواقع، وترى العقل ناشطاً ومستكشفاً لحل المشكلات وليس وعاءً مستقبلاً."
+    },
+    {
+        id: 72,
+        question: "أهم خصائص تصميم المنهج في ضوء النظرية البرجماتية هما 'المرونة والتجريب'، ويحل فيها أسلوب 'حل المشكلات' بدلاً من التلقين.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ فالبرجماتية ترفض القوالب الجامدة وتنظم المحتوى حول المشكلات الحقيقية الواقعية التي يواجهها الطلاب."
+    },
+    {
+        id: 73,
+        question: "النظرية التي تنادي بتحويل محتوى التربية إلى اتجاه 'الفنون المتعددة' ووجوب ربط كل جانب من جوانب المدرسة بـ 'الحياة الإنتاجية والعمل اليدوي' هي النظرية:",
+        options: ["الموسوعية الشاملة", "الجوهرية المحافظة", "البرجماتية التقدمية", "البوليتكنيكية (التطبيقية)"],
+        correct: 3,
+        explanation: "النظرية البوليتكنيكية تستهدف دمج التعليم بالإنتاج الاجتماعي الرأسمالي أو الاشتراكي وإكساب الشباب خلفية تقنية ومهارات الآلات والعمل اليدوي."
+    },
+    {
+        id: 74,
+        question: "وجدت المفاهيم البوليتكنيكية مكانها الأيديولوجي والسياسي الأكبر في النظام التعليمي السوفيتي بعد الثورة البلشفية عام 1917م، والنموذج الصيني الحالي.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ حيث اعتمدت الأنظمة الاشتراكية على الورش التعليمية بالمدارس وربطها بالمصانع والمزارع ووحدات الجيش لتحقيق الوحدة بين النظرية والتطبيق النافع اجتماعياً."
+    },
+    {
+        id: 75,
+        question: "يقوم 'نموذج تايلر' (1949م) الشهير لتصميم المناهج على فكرة 'التحليل خطوة بخطوة' عبر أربعة أسئلة متتالية تبدأ بـ:",
+        options: ["اختيار الخبرات وتنظيمها", "تقويم الأهداف والخبرات", "صياغة واختيار الأهداف التربوية للمدرسة", "تحديد عينات عشوائية لتجريب المنهج"],
+        correct: 2,
+        explanation: "يبدأ نموذج تايلر الخطي الصارم بصياغة الأهداف أولاً، ثم اختيار الخبرات، ثم تنظيمها، وينتهي بالتقويم الختامي."
+    },
+    {
+        id: 76,
+        question: "يمثل التقويم عند تايلر مرحلة نهائية وختامية (جاء في نهاية العملية للحكم بالإيجاب أو السلب فقط) وليس تقويماً مستمراً مواكباً لكل مرحلة.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ وهذا من أبرز العيوب والنقود الموجهة لنموذج تايلر الخطي؛ حيث يفتقر للتغذية الراجعة التفاعلية أثناء العمليات."
+    },
+    {
+        id: 77,
+        question: "اشتمل نموذج 'مكدونالد' على أربعة أنظمة مدرسية رئيسية تتداخل فيما بينها لتشكل بؤرة النظام الاجتماعي؛ هذه الأنظمة هي:",
+        options: ["المدخلات، العمليات، المخرجات، التغذية الراجعة", "المنهج، العملية التعلمية التعليمية، التعليم، التعلم", "الأهداف، المحتوى، الأنشطة، التقويم المستمر", "الفلسفة، المعرفة، المجتمع، سيكولوجية الطفل"],
+        correct: 1,
+        explanation: "حدد مكدونالد الأنظمة الأربعة المتداخلة هندسياً لتشكل البؤرة المركزية الحاكمة للنظام الاجتماعي المدرسي التفاعلي."
+    },
+    {
+        id: 78,
+        question: "وفقاً لنموذج مكدونالد، ما دام التعلم والتعليم يحدثان بصورة منفصلة فهما يمثلان 'أنظمة شخصية'، أما عند جمعهما معاً فيتحقق 'النظام الاجتماعي'.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ الدمج التفاعلي الفوري بين فعلي التعليم والتعلم هو ما يحول الموقف التربوي إلى نظام اجتماعي حقيقي."
+    },
+    {
+        id: 79,
+        question: "يتميز 'نموذج ويلر' (Wheeler) التخطيطي عن نموذجي تايلر وتابا بميزة هيكلية جوهرية هي كونه:",
+        options: ["نموذجاً خطياً مستقيماً يسير من اليمين إلى اليسار فقط", "تكنولوجيا مبرمجة تعتمد على الورش الصينية والمصانع", "عملية دائرية مستمرة متصلة في حلقة تضمن التجدد والتطوير والتغذية الراجعة للأهداف", "منظومة إنتاجية تفتت النصوص وتمنع تداخل المجهودات المعرفية"],
+        correct: 2,
+        explanation: "ويلر هو من حطم جمود الخطية وحول تصميم المنهج إلى دائرة خماسية المراحل مستمرة تضمن تدفق التغذية الراجعة والتطور المستمر."
+    },
+    {
+        id: 80,
+        question: "العنصر المعرفي المستقل (المحتوى) لم يظهر بصورة واضحة ومستقلة كخطوة في نموذج تايلر، بينما أعطاه نموذج 'زايس الهندسي التبادلي' اهتماماً كبيراً ومستقلاً.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ تايلر ركز في أسئلته على 'الخبرات والأنشطة'، بينما أفرد زايس مربعاً مستقلاً للمحتوى المعرفي مع أسهم تبادلية في كل الاتجاهات للتعبير عن التفاعل."
+    },
+
+    // ==========================================
+    // الفصل الخامس: تنظيمات المنهج المدرسي المعاصر (81 - 100)
+    // ==========================================
+    {
+        id: 81,
+        question: "يقصد بـ 'الأساس التكنولوجي' لبناء وتنظيم المناهج المعاصرة:",
+        options: ["الاعتماد المطلق على شهرة المؤلفين ومكانتهم العلمية وتأليفاتهم", "شراء أجهزة وتوزيعها على الفصول دون تعديل في الأهداف أو طرق التدريس", "تصميم مكونات المنهاج (الأهداف، المحتوى، الطرق، التقويم) في ضوء تكنولوجيا التعليم وإدخال الروح التكنولوجية والمنظومية فيه", "العودة بالتعليم إلى مناهج المواد المنفصلة وحفظ التراث اليوناني القديم"],
+        correct: 2,
+        explanation: "الأساس التكنولوجي يعني هندسة المنهاج كمنظومة متكاملة تندمج فيها الأهداف والمضامين والأجهزة لتشكيل كيان تعليمي متطور وأكثر فاعلية."
+    },
+    {
+        id: 82,
+        question: "الاشتقاق اللغوي لكلمة تكنولوجيا يعود للغة الإغريقية القديمة وهي مشتقة من شقين هما (Techne) بمعنى مهارة و(Logos) بمعنى دراسة.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ وبالتالي تعني التكنولوجيا لغوياً 'دراسة المهارة الفنية أو تنظيمها لتصبح وظيفتها أكثر وضوحاً وجدوى عملي'."
+    },
+    {
+        id: 83,
+        question: "يرى الدكتور ماهر إسماعيل صبري أن التكنولوجيا ليست مجرد علم أو تطبيق للعلم أو مجرد أجهزة ومعدات بل هي 'نشاط إنساني يشمل الجانب العلمي والتطبيقي معاً'.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ التكنولوجيا نشاط بشري متكامل يجمع الفكر بالآلة بالتطبيق العملي لحل المشكلات."
+    },
+    {
+        id: 84,
+        question: "من الملحوظات النقدية المبكرة لـ 'إبراهيم والكلزة' على المنهج التكنولوجي أنه قالب من قوالب إخراج المواد المنفصلة في صورة تكنولوجية وانه:",
+        options: ["يمنح التلاميذ الحرية المطلقة لصياغة أهدافهم الخاصة بحرية", "يندر فيه التعامل مع الأهداف الملائمة للظروف الاجتماعية ولا تتاح الفرصة للتلاميذ لوضع أهدافهم", "يعتمد كلياً على عواطف المعلمين وميولهم الشخصية الذاتية", "يركز على التربية البيئية خارج أسوار الفصل في الهواء الطلق"],
+        correct: 1,
+        explanation: "وجه النقد للمنهج التكنولوجي بكونه يقدم برامج وأهدافاً جاهزة ومعد مسبقاً من الخبراء، مما يسلب الطلاب فرصة صياغة أهدافهم أو مراعاة التغير الاجتماعي العفوي."
+    },
+    {
+        id: 85,
+        question: "يقوم المنهج التكنولوجي على آلية سيكولوجية تتيح للمتعلم الوقت الكافي للسير في تعلمه وفقاً لسرعته وقدراته الفردية لتحقيق الإتقان؛ وتسمى هذه الآلية:",
+        options: ["الربط العرضي للمواد الدراسية", "أسلوب الخطو الذاتي (Self-Pacing)", "التكامل الأفقي الموسوعي", "التحصيل الأكاديمي الموازي الكامن"],
+        correct: 1,
+        explanation: "الخطو الذاتي هو جوهر تفريد التعليم بالتكنولوجيا؛ حيث يتقدم كل طالب بملف التعلم تبعا لكفاءته وسرعته الخاصة."
+    },
+    {
+        id: 86,
+        question: "في المنهج التكنولوجي، الأصل أن ينجح المتعلم ويصل للإتقان، وإذا فشل فإن الفشل لا يرجع لضعف المتعلم وإنما لضعف البرنامج أو ضعف إدارة العملية.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ تحمل الفلسفة التكنولوجية المصمم والبرنامج مسؤولية الفشل، وترى أن الصياغة الدقيقة والتغذية الراجعة الكفيلة بإيصال الجميع للإتقان."
+    },
+    {
+        id: 87,
+        question: "يتحول دور المعلم في ظل المنهج التكنولوجي من 'مصدر المعرفة والملقن الوحيد' ليصبح ميسراً ومصمماً للمواقف التعليمية، وهو دور يشبه:",
+        options: ["عامل الحانوت التقليدي للحشو المعرفي", "مهندس المعلومات أو مهندس المعرفة", "المقوم الخارجي الختامي المنفصل", "عضو الارتباط المصطنع للمواد المتصلة"],
+        correct: 1,
+        explanation: "يتحول دور المعلم التقني إلى الإشراف والهندسة المعرفية للمواقف وتوجيه مسارات التعلم الذاتي الرقمي."
+    },
+    {
+        id: 88,
+        question: "يسمح عصر المعلوماتية للمنهج التكنولوجي بتحقيق 'التكامل المعرفي وتفتيت النصوص وتجميعها في وحدات أصغر' عبر تنظيم متطور يسمى:",
+        options: ["التنظيم الخطي المستقيم المتتابع", "التنظيم الحلزوني للمحتوى المعرفي", "التنظيم الكلاسيكي للمواد المنفصلة", "المنهج العالمي منزوع الهوية الوطنية"],
+        correct: 1,
+        explanation: "التنظيم الحلزوني يتيح للطالب التقدم بالعمق المعرفي مع فرص التكرار والمراجعة المستمرة للمفاهيم عبر مراحل عمره المختلفة."
+    },
+    {
+        id: 89,
+        question: "المفهوم التربوي الذي يشير إلى 'برامج تمزج تفاعلياً بين الكتابات، الصور، الأصوات، والرسومات الخطية لإثارة العيون والآذان والعقول بمساعدة الحاسوب' هو:",
+        options: ["منهج المواد المتصلة", "بنوك الأسئلة المبرمجة", "تكنولوجيا الوسائط المتعددة (Multimedia)", "المنهج الموازي الخفي"],
+        correct: 2,
+        explanation: "الوسائط المتعددة تحقق تزاوجاً فعالاً يثير حواس المتعلم أطراف أصابعه وعقله، مما يعزز الفهم ويقلل النسيان والتشتت."
+    },
+    {
+        id: 90,
+        question: "يتجه التقويم التكنولوجي الحديث إلى النظر لكل متعلم على أنه 'نموذج من ذاته وحالة منفردة'، وهو ما ينسجم تماماً مع مبدأ تفريد التعليم.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ يرفض التقويم التقني المقارنات المعيارية الجماعية الجائرة، ويقيس نمو الطالب بناءً على مستواه القبلي ومعدل خطوه الذاتي."
+    },
+    {
+        id: 91,
+        question: "مكان آمن تُوضع فيه مجموعات متنوعة من الأسئلة المقننة ذات مستويات مختلفة ويسهل عن طريقه سحب أو إضافة الأسئلة يمثل مفهوم الاختبارات الإلكترونية.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 1,
+        explanation: "خاطئة؛ هذا هو تعريف 'بنوك الأسئلة'، أما 'الاختبارات الإلكترونية' فهي العملية المستمرة والمنتظمة لتقييم الطالب عن بعد بالشبكات."
+    },
+    {
+        id: 92,
+        question: "من عيوب المنهج التكنولوجي الميدانية أنه يسهم في جعل المتعلم يعيش في عالم منعزل عن العالم الحقيقي والتفاعل الاجتماعي الذي يبني الشخصية المتوازنة.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ الاستغراق الانفرادي أمام الشاشات الرقمية يضعف المهارات والروابط الاجتماعية الحية للمتعلمين."
+    },
+    {
+        id: 93,
+        question: "يتميز المنهج التكنولوجي عن المنهج التقليدي في كونه 'يعتمد على التجريب للمواد الدراسية للاطمئنان على مصداقيتها'، بينما التقليدي يعتمد على شهرة المؤلفين وسمعتهم.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ يرتكز التكنولوجي على الثبات الإحصائي والتجريب الميداني الاستكشافي، بخلاف التقليدي الشكلي."
+    },
+    {
+        id: 94,
+        question: "المنهج الذي يتألف من عدد كبير نسبياً من المواد التي تدرس منفصلة عن بعضها وتوضع حواجز فاصلة بين فروع المادة الواحدة (كفصل المطالعة عن النحو) هو:",
+        options: ["منهج المجالات الواسعة", "منهج المواد الدراسية المنفصلة (التقليدي)", "المنهج المندمج الحديث", "المنهج المحوري السلوكي"],
+        correct: 1,
+        explanation: "منهج المواد المنفصلة يقسم المعرفة لموضوعات وأبواب منفصلة تتبع منطق المادة وجزئياتها ويقدس الكتاب المدرسي."
+    },
+    {
+        id: 95,
+        question: "ينقسم منهج المواد المتصلة (المترابطة) إلى أسلوبين في الربط هما: الربط المنظم المخطط بين المعلمين، و:",
+        options: ["الربط الحلزوني القائم على برونر", "الربط العرضي (الذي يُترك لحرية المدرس وحسب الظروف)", "الدمج التام وإزالة الكيان المهني للمادة", "الترابط البيئي الموازي خارج المدرسة"],
+        correct: 1,
+        explanation: "الربط العرضي متروك لظروف الحصة وعفوية المعلم، وقد يعاب عليه كونه صناعياً ويسبب الخروج غير الممنهج عن المقرر."
+    },
+    {
+        id: 96,
+        question: "التنظيم المنهجي الذي يحاول 'ضم المواد الدراسية التي تكون بينها علاقات وثيقة في ميدان واحد' (مثل دمج التاريخ والجغرافيا والوطنية تحت مسمى الاجتماعيات) هو:",
+        options: ["منهج المواد المنفصلة الكلاسيكي", "منهج المجالات الواسعة (Broad Fields)", "منهج المشروع وطريقة ديوي", "المنهج التكنولوجي المبرمج آلياً"],
+        correct: 1,
+        explanation: "منهج المجالات الواسعة يقلل عدد المواد شكلياً بجمع الفروع المتقاربة في حقل كلي (كالاجتماعيات والعلوم العامة)."
+    },
+    {
+        id: 97,
+        question: "المنهج المندمج (Fused Curriculum) يمزج المواد مزجاً تاماً ويزيل الحواجز تماماً مقدماً، وينص المتن على أنه يصلح فقط لمرحلتي رياض الأطفال والمرحلة الأولى الابتدائية.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ لكون دراسته سطحية عامة قد تفقد المادة أصالتها وكيانها المنطقي، فلا يتناسب مع المراحل المتقدمة الباحثة عن التخصص."
+    },
+    {
+        id: 98,
+        question: "مناهج النشاط أو الخبرة (طريقة المشروع) تتخذ من 'ميول الطلبة وحاجاتهم ورغباتهم' الأساس الأول والوحيد لبناء النشاط التعليمي والخبرات المربية.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ يوضع الطالب وميوله في مركز الدائرة تماماً، والمعلم مجرد مرشد وموجه، ويعاب عليه إضعاف إتقان العلوم وإهمال المشكلات الاجتماعية."
+    },
+    {
+        id: 99,
+        question: "المنهج الموازي أو غير الرسمي، ويمثل كافة الخبرات والمعارف والقيم والسلوك التي يتعلمها التلاميذ خارج المنهج المقرر دون إشراف المعلم أو علمه هو المنهج:",
+        options: ["العالمي الإنساني المشترك", "البيئي المحلي القائم على التجربة", "الخفي الكامن (Hidden Curriculum)", "المحوري الموجه لجميع الطلاب"],
+        correct: 2,
+        explanation: "المنهج الخفي يمثل التحصيل الدراسي الثاني ويشمل تفاعلات الطلاب البينية وميول المعلمين غير المقصودة، وتأثيره يفوق المنهج الرسمي أحياناً."
+    },
+    {
+        id: 100,
+        question: "المنهج الذي يعتمد على مشكلات ومجالات البيئة المحيطة لربط المدرسة بالحياة من حولها، ويستخدم أدوات تقويم حديثة كملفات التقويم (البورتفليو) هو المنهج البيئي.",
+        options: ["صحيحة", "خاطئة"],
+        correct: 0,
+        explanation: "صحيحة؛ يستهدف المنهج البيئي إكساب الطلاب قيم وحماية البيئة عملياً، ويعاب عليه حاجته لطرائق غير تقليدية وتكلفة معقدة قد تضعف الانتماء الوطني أحياناً."
+    }
+];
+  
+
+        // Generate and render the quiz dynamically
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = ''; // Clear container
+
+            quizData.forEach((q, index) => {
+                const qCard = document.createElement('div');
+                qCard.className = 'quiz-card';
+                
+                let optionsHtml = '';
+                q.options.forEach((opt, optIndex) => {
+                    optionsHtml += `
+                        <label class="option-label" id="label-${q.id}-${optIndex}">
+                            <input type="radio" name="question-${q.id}" value="${optIndex}" style="accent-color: var(--primary-color);">
+                            <span>${opt}</span>
+                        </label>
+                    `;
+                });
+
+                qCard.innerHTML = `
+                    <div class="quiz-question">س ${index + 1}: ${q.question}</div>
+                    <div class="quiz-options">
+                        ${optionsHtml}
+                    </div>
+                    <button class="check-btn" onclick="checkAnswer(${q.id}, ${q.correct}, '${escapeHtml(q.explanation)}')">تحقق من الإجابة</button>
+                    <div class="quiz-feedback" id="feedback-${q.id}"></div>
+                `;
+                container.appendChild(qCard);
+            });
+        }
+
+        // Check Answer Engine
+        function checkAnswer(qId, correctIdx, explanation) {
+            const selectedOpt = document.querySelector(`input[name="question-${qId}"]:checked`);
+            const feedbackDiv = document.getElementById(`feedback-${qId}`);
+            
+            if (!selectedOpt) {
+                alert("من فضلك، اختر إجابة أولاً قبل التحقق!");
+                return;
+            }
+
+            const userAns = parseInt(selectedOpt.value);
+            
+            // Clear prior status markings on options labels
+            const labels = document.querySelectorAll(`[id^="label-${qId}-"]`);
+            labels.forEach(lbl => {
+                lbl.classList.remove('correct', 'incorrect');
+            });
+
+            // Mark the correct answer label green
+            document.getElementById(`label-${qId}-${correctIdx}`).classList.add('correct');
+
+            if (userAns === correctIdx) {
+                feedbackDiv.className = "quiz-feedback show";
+                feedbackDiv.style.backgroundColor = "rgba(40, 167, 69, 0.1)";
+                feedbackDiv.style.borderRight = "4px solid var(--success-color)";
+                feedbackDiv.style.color = "var(--success-color)";
+                feedbackDiv.innerHTML = `<strong>إجابة صحيحة وممتازة! 🎉</strong><br>${explanation}`;
+            } else {
+                // Mark the user's wrong option label red
+                document.getElementById(`label-${qId}-${userAns}`).classList.add('incorrect');
+                
+                feedbackDiv.className = "quiz-feedback show";
+                feedbackDiv.style.backgroundColor = "rgba(220, 53, 69, 0.1)";
+                feedbackDiv.style.borderRight = "4px solid var(--danger-color)";
+                feedbackDiv.style.color = "var(--danger-color)";
+                feedbackDiv.innerHTML = `<strong>إجابة خاطئة ❌</strong> (تم تحديد الصواب باللون الأخضر).<br><strong>التعليل والبيان العلمي المعتمد:</strong> ${explanation}`;
+            }
+        }
+
+        // Helper to escape text html strings safely inside onclick function definitions
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Run the script constructor immediately on loading
+        window.onload = function() {
+            renderQuiz();
+        };
+    </script>
+</body>
+</html>
